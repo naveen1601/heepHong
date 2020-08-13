@@ -6,7 +6,8 @@ import {
     StatusBar,
     View,
     Text,
-    TouchableOpacity
+    TouchableOpacity,
+    ActivityIndicator
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -14,8 +15,8 @@ import AntIcon from 'react-native-vector-icons/AntDesign';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import FeatherIcons from 'react-native-vector-icons/Feather';
 import { WebView } from 'react-native-webview';
-
-
+import LoginScreen from '../containers/loginScreen/LoginScreen'
+//user FontAwesome, locked Fontisto
 
 function HomeScreen() {
     return (
@@ -28,17 +29,38 @@ function HomeScreen() {
 function NotificationScreen() {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Settings!</Text>
+            <LoginScreen/>
         </View>
     );
 }
 
 
 function MoreScreen () {
+    const vwuri= 'https://www.ndtv.com/';
+    function LoadingIndicatorView() {
+        return (
+        <ActivityIndicator  color='#f59042' size='large' style={styles.ActivityIndicatorStyle} >
+            
+        </ActivityIndicator>
+        )
+      }
     return (
-      <WebView
-        originWhitelist={['*']}
-        source={{ html: '<h1>Hello world</h1>' }}
+        <WebView
+        source={{
+          uri: vwuri,
+        }}
+        javaScriptEnabled={true}
+        domStorageEnabled={true}
+        sharedCookiesEnabled={true}
+        originWhitelist={["*"]}
+        scalesPageToFit={true}
+        startInLoadingState={true}
+        mixedContentMode={"always"}
+        allowsInlineMediaPlayback={true}
+        allowsFullscreenVideo={true}
+        allowsBackForwardNavigationGestures={true}
+        allowsLinkPreview={false}
+        renderLoading={LoadingIndicatorView}
       />
     );
   }
@@ -163,3 +185,11 @@ export default HhsNavigator = () => {
         </>
     );
 }
+
+const styles = StyleSheet.create({
+    ActivityIndicatorStyle: {
+      flex: 1,
+      justifyContent: 'space-evenly'
+    }
+  })
+  
