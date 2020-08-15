@@ -4,8 +4,8 @@ import { create } from '../../helpers/PlatformSpecificStyles';
 import TextInput from '../../baseComponents/textInput/TextInput';
 import PasswordInput from '../../baseComponents/passwordInput/PasswordInput';
 //user FontAwesome, locked Fontisto
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import Button from '../../baseComponents/button/Button';
 import {
@@ -14,7 +14,8 @@ import {
     ScrollView
 } from 'react-native';
 import Text from '../../baseComponents/text/Text';
-// import { Screens } from '../../helpers/screenHelpers'
+import FlatButton from '../../baseComponents/button/FlatButton';
+import { Screens } from '../../helpers/screenHelpers'
 
 class LoginScreen extends Component {
 
@@ -29,7 +30,7 @@ class LoginScreen extends Component {
         //this.updateLoginButtonState(text, this.state.password);
     }
 
-    handlePasswordChange = (text) =>{
+    handlePasswordChange = (text) => {
         this.setState({ password: text });
         //this.updateLoginButtonState(this.state.userName, text);
     }
@@ -38,7 +39,7 @@ class LoginScreen extends Component {
     renderLoginModal = () => {
         return (
             <ScrollView keyboardShouldPersistTaps={'always'}>
-
+                <View style={styles.loginBox}>
                     <View style={styles.textInputFieldsContainer}>
                         <FontAwesome name={'user'}
                             style={styles.iconStyle}
@@ -56,7 +57,7 @@ class LoginScreen extends Component {
                     </View>
                     <View style={styles.textInputFieldsContainer}>
                         <Fontisto name={'locked'}
-                             style={styles.iconStyle}
+                            style={styles.iconStyle}
                             size={20} />
                         <PasswordInput onChangeText={this.handlePasswordChange}
                             testID="passwordTextInput"
@@ -66,57 +67,34 @@ class LoginScreen extends Component {
                             value={this.state.password}
                             stacked />
                     </View>
-                    
+                    <View style={styles.forgetPassBox}>
+                        <FlatButton
+                            onPress={() => { }}
+                            text={'Forget Password ?'}
+                        />
+                    </View>
+                    <View style={styles.loginButton}>
+                        <Button
+                            onPress={this.handleLoginButton}
+                            text="Sign In"
+                            secondaryButton={true}
+                            style= {styles.buttonStyle}
+                        />
+                    </View>
+                </View>
 
             </ScrollView>
         );
     }
 
     // handleLoginButton = () => this.props.navigation.navigate(Screens.LoginScreen);
-    handleLoginButton = () => { };
-
-
-    renderLoginOption = () => (
-
-        <View style={styles.loginModalBackground}>
-            <View style={styles.loginInputFieldsContainer}>
-
-                <TextInput
-                    testId="userNameTextInput"
-                    onChangeText={() => { }}
-                    value={this.state.userName}
-                    placeholder="Enter Your User Id"
-                    keyboardType="email-address"
-                    hasErrors={false}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                />
-
-                <PasswordInput onChangeText={() => { }}
-                    testID="passwordTextInput"
-                    placeholder={'Password'}
-                    hasErrors={false}
-                    maxLength={20}
-                    value={this.state.password}
-                    stacked />
-
-                <Button
-                    onPress={this.handleLoginButton}
-                    text="Login through user id"
-                    secondaryButton={true}
-                // disabled
-                />
-                <Text>heessdsdsds</Text>
-            </View>
-        </View>
-    );
-
+    handleLoginButton = () => this.props.navigation.replace(Screens.TAB);
 
     render() {
         return (
-            // <Text>heessdsdsds</Text>
-            this.renderLoginModal()
-            // this.renderLoginOption()
+            <View style={styles.loginContainer}>
+                {this.renderLoginModal()}
+            </View>
         );
     }
 }

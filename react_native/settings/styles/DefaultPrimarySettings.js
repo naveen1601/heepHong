@@ -1,9 +1,9 @@
 export default {
     productName: 'HeepHongSociety',
-    primaryColor: '#f59042',
-    secondaryColor: '#255166',
+    primaryColor: '#E18128',
+    secondaryColor: '#E18128',
     tertiaryColor: '#8E8E8F',
-    underlineColor: '#00A9A5',
+    underlineColor: '#edb37e',
     black: '#000000',
     white: '#FFFFFF',
     iOSStatusBarStyle: 1,

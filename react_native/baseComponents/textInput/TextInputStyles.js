@@ -8,6 +8,7 @@ let TextInputStyles = {
         // borderColor: $_.textBorderColor,
         // borderWidth: 1,
         backgroundColor: $_.textBackgroundColor,
+        width: '95%'
     },
     textInputContainerError: {
         borderColor: $_.textInputContainerErrorBorderColor,

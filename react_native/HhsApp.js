@@ -24,8 +24,8 @@ const HhsApp = () => {
     <Provider store={store}>
       <PersistGate
         persistor={persistor}>
-        {/* <HhsNavigator /> */}
-        <LoginScreen/>
+        <HhsNavigator />
+        {/* <LoginScreen/> */}
       </PersistGate>
     </Provider>
   );
