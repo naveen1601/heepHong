@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { persistStore, persistCombineReducers, createMigrate } from 'redux-persist';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import getStoredStateMigrateV4 from 'redux-persist/lib/integration/getStoredStateMigrateV4';
-// import login from './containers/loginScreen/LoginReducer';
+import login from './containers/loginScreen/LoginReducer';
 // import leadersBoard from './containers/leadersBoardScreen/LeadersBoardReducer'
 
 const oldConfig = {
@@ -23,7 +23,7 @@ function getStore() {
     };
 
     //let reducers = persistCombineReducers(config, { login, leadersBoard });
-    let reducers = persistCombineReducers(config, { });
+    let reducers = persistCombineReducers(config, { login });
     
     let store = createStore(
         reducers,

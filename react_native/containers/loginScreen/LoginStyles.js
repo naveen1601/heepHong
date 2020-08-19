@@ -43,6 +43,12 @@ export default {
     },
 
     
+    dropDownContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        backgroundColor: '#ecf0f1',
+        padding: 8,
+    },
     loginModalBackground: {
         backgroundColor: $_.loginPageBackgroundColor,
         height: '100%'

@@ -6,20 +6,24 @@ import Text from '../../baseComponents/text/Text';
 import ButtonStyles from './ButtonStyles';
 
 const FlatButton = (props) => {
-    const handleOnPress =()=> {
+    const handleOnPress =(text)=> {
         Keyboard.dismiss();
-        props.onPress();
+        props.onPress(text);
     };
+    const buttonStyle = [styles.flatButton];
+    if (props.style) {
+        buttonStyle.push(props.style);
+    }
     return (
         <TouchableOpacity style={styles.flatButtonWrapper}
-            onPress={handleOnPress}
+            onPress={()=>handleOnPress(props.text)}
             disabled={props.disabled}
             accessibilityTraits="button"
             accessibilityComponentType="button"
             accessibilityLabel={props.text}
             accessible>
             <View testID={props.testID}>
-                <Text style={styles.flatButton}
+                <Text style={buttonStyle}
                     testID={props.testID}>
                     {props.text}
                 </Text>

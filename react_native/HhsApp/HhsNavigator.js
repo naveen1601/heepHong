@@ -7,68 +7,32 @@ import {
     View,
     Text,
     TouchableOpacity,
-    ActivityIndicator
+    ActivityIndicator,
+    I18nManager
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator, HeaderBackground } from '@react-navigation/stack';
+import { connect } from 'react-redux';
+
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import FeatherIcons from 'react-native-vector-icons/Feather';
-import { WebView } from 'react-native-webview';
 import LoginScreen from '../containers/loginScreen/LoginScreen'
 import { Screens, resetScreen } from '../helpers/screenHelpers';
+import Button from '../baseComponents/button/Button';
+import ActivityScreen from '../containers/activityScreen/ActivityScreen';
+import I18n from '../i18n/locales';
+import CalendarScreen from '../containers/calendarScreen/CalendarScreen';
+import MoreScreen from '../containers/moreScreen/MoreScreen';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import NativeToWeb from '../containers/NativeToWeb';
 
-//user FontAwesome, locked Fontisto
+// import Text from '../baseComponents/text/Text';
+
+
 
 const Stack = createStackNavigator();
-
-function CalendarScreen() {
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Cal</Text>
-        </View>
-    );
-}
-
-function NotificationScreen() {
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <LoginScreen />
-        </View>
-    );
-}
-
-
-function MoreScreen() {
-    const vwuri = 'https://www.ndtv.com/';
-    function LoadingIndicatorView() {
-        return (
-            <ActivityIndicator color='#f59042' size='large' style={styles.ActivityIndicatorStyle} >
-
-            </ActivityIndicator>
-        )
-    }
-    return (
-        <WebView
-            source={{
-                uri: vwuri,
-            }}
-            javaScriptEnabled={true}
-            domStorageEnabled={true}
-            sharedCookiesEnabled={true}
-            originWhitelist={["*"]}
-            scalesPageToFit={true}
-            startInLoadingState={true}
-            mixedContentMode={"always"}
-            allowsInlineMediaPlayback={true}
-            allowsFullscreenVideo={true}
-            allowsBackForwardNavigationGestures={true}
-            allowsLinkPreview={false}
-            renderLoading={LoadingIndicatorView}
-        />
-    );
-}
 
 function RenderAntIcon(props) {
 
@@ -120,23 +84,24 @@ const Tabs = () => {
                     return {
                         tabBarIcon: (navigation) => (
                             <RenderAntIcon navigation={navigation}
-                                iconName={"calendar"} />
+                                iconName={'calendar'} />
                         ),
-                        tabBarLabel: 'Calendar',
+                        tabBarLabel: I18n.t('navigator.calendar'),
                         color: '#f59042'
                     }
                 }}
             />
-            <BottomTabs.Screen name={Screens.NOTIFICATION_SCREEN}
-                component={NotificationScreen}
+            <BottomTabs.Screen name={Screens.ACTIVITY_SCREEN}
+                component={ActivityScreen}
                 options={({ navigation }) => {
                     return {
                         tabBarIcon: (navigation) => (
                             <RenderIonIcons navigation={navigation}
                                 iconName={"md-notifications-outline"} />
                         ),
-                        tabBarLabel: 'Notification',
-                        color: '#f59042'
+                        tabBarLabel: I18n.t('navigator.activity'),
+                        color: '#f59042',
+                        headerShown: true
                     }
                 }
                 } />
@@ -149,11 +114,24 @@ const Tabs = () => {
                             <RenderFeatherIcons navigation={navigation}
                                 iconName={"more-horizontal"} />
                         ),
-                        tabBarLabel: 'More',
+                        tabBarLabel: I18n.t('navigator.more'),
                         color: '#f59042'
                     }
                 }
                 } />
+            {/* <BottomTabs.Screen name={'temp'}
+                component={NativeToWeb}
+                options={({ navigation }) => {
+                    return {
+                        tabBarIcon: (navigation) => (
+                            <RenderFeatherIcons navigation={navigation}
+                                iconName={"more-horizontal"} />
+                        ),
+                        title: ()=><Text>{I18n.t('navigator.more')}</Text>,
+                        color: '#f59042'
+                    }
+                }
+                } /> */}
         </BottomTabs.Navigator>
     );
 }
@@ -174,32 +152,25 @@ function MyStack() {
         </Stack.Navigator>
     );
 }
-
-
-{/* <BottomTabs.Screen name={"Home"} 
-            component={CalendarScreen}
-            options={{
-                tabBarIcon: (tabInfo) => (
-                  <MaterialIcons name="home" size={18} color={tabInfo.tintColor} />
-                ),
-              }} 
-            /> */}
-
-export default HhsNavigator = () => {
+const HhsNavigator = (props) => {
+    I18n.locale = props.userLanguage;
     return (
         <>
             <StatusBar
-                barStyle="dark-content" />
-            <NavigationContainer>
-                <MyStack />
-            </NavigationContainer>
+                barStyle="dark-content" translucent={true} />
+            <SafeAreaProvider>
+                <NavigationContainer>
+                    <MyStack />
+                </NavigationContainer>
+            </SafeAreaProvider>
         </>
     );
 }
 
-const styles = StyleSheet.create({
-    ActivityIndicatorStyle: {
-        flex: 1,
-        justifyContent: 'space-evenly'
+const mapStateToProps = (state) => {
+    return {
+        userLanguage: state.login && state.login.language
     }
-})
+}
+
+export default connect(mapStateToProps)(HhsNavigator)
