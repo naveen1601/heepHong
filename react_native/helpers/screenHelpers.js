@@ -5,7 +5,8 @@ export const Screens = {
     ACTIVITY_SCREEN: 'ACTIVITY_SCREEN',
     MORE_SCREEN: 'MORE_SCREEN',
     LOGIN_SCREEN: 'LOGIN_SCREEN',
-    TAB: 'TAB'
+    TAB: 'TAB',
+    DETAIL_SCREEN: 'DETAIL_SCREEN'
 };
 
 export const resetScreen = (navigation,screenName) => {

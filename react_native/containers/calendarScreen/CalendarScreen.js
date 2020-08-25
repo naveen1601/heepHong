@@ -21,6 +21,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import CalendarAction from './CalendarAction';
 import RNPickerSelect, { defaultStyles } from 'react-native-picker-select';
+import { Screens } from '../../helpers/screenHelpers';
 
 class CalendarScreen extends Component {
     constructor(props) {
@@ -53,7 +54,7 @@ class CalendarScreen extends Component {
     }
 
     onMessage = (event) => {
-        alert(JSON.stringify(event.nativeEvent.data));
+        //alert(JSON.stringify(event.nativeEvent.data));
     }
 
     handleTodaySelection = () => {
@@ -65,16 +66,13 @@ class CalendarScreen extends Component {
     }
 
     runFirst = () => {
-        // const sentToWebView= {
-        //     case: 7519,
-        //     calendarType: 'week',
-        //     todayView: false
-        // } 
+         
         const sentToWebView = {
             CaseId: 4543,
             method: "LoadCalendarByCaseId",
-            LanguageCode: 'en-US'
+            LanguageCode: 'zh-CN'
         }
+        
         // let injectedData = `window.postMessage(${JSON.stringify(sentToWebView)}, "*");`;
         // console.log('sss ',stateName) 
         // window.postMessage(${JSON.stringify(sentToWebView)}, "*");
@@ -136,23 +134,16 @@ class CalendarScreen extends Component {
 
     renderHeader = () => {
 
-        // const selectedNameLabel = this.props.languageSelected == 'en' ? this.props.selectedCase.DisplayEnglish : this.props.selectedCase.DisplayChinese;
-        // const selectedCase = {
-        //     label: selectedNameLabel,
-        //     value: this.props.selectedCase
-        // }
-        const casesList = this.props.cases.map(item=>{
+        const casesList = this.props.cases.map(item => {
             const nameLabel = this.props.languageSelected == 'en' ? item.DisplayEnglish : item.DisplayChinese;
             return {
                 label: nameLabel,
                 value: item.Key,
             }
         })
-        
-        return(
-        <View style={styles.calendarHeader}>
-            {/* <TouchableOpacity
-                onPress={this.handleCaseOption}> */}
+
+        return (
+            <View style={styles.calendarHeader}>
                 <View style={styles.caseContainer}>
                     <FontAwesome name={'user-o'}
                         style={styles.userIcon}
@@ -171,24 +162,18 @@ class CalendarScreen extends Component {
                                 size={8} />;
                         }}
                     />
-                    {/* <Text style={styles.caseName}>
-                        Case Name
-                    </Text>
-                    <AntDesign name={'down'}
-                        style={styles.arrowIcon}
-                        size={8} /> */}
                 </View>
-            {/* </TouchableOpacity> */}
 
-            {this.renderCalendarButton()}
-            <TouchableOpacity style={styles.caseContainer}
-                onPress={this.handleTodaySelection}>
-                <MaterialCommunityIcons name={'calendar-today'}
-                    style={styles.todayIcon}
-                    size={22} />
-            </TouchableOpacity>
-        </View>
-    )}
+                {this.renderCalendarButton()}
+                <TouchableOpacity style={styles.caseContainer}
+                    onPress={this.handleTodaySelection}>
+                    <MaterialCommunityIcons name={'calendar-today'}
+                        style={styles.todayIcon}
+                        size={22} />
+                </TouchableOpacity>
+            </View>
+        )
+    }
 
     render() {
         const vwuri = 'http://hhs-cam2.eastasia.cloudapp.azure.com/hhsmobile?token=qyy_mrt1tiOMUumJOUHgibjsO_RSIijipBaUr2kQGH5RqVH8cx4nc88_543xgLRqrfUryuQloN4tK6Oa1AKLz6QMqNFKnFTmO16GzvZcKXEY6QPe8Gy6anuCGRAPb5K3jaHiTNNdh9rRIUF3TeMzBjFQMmNkACtMdtXWEeaRYoo_Lsy2fmXsUO3gcOf13QJi4_PQD-lXG-q3YSUB3BXxS65d9QevWds-zWmeHBnCvpo&CaseId=4543&LanguageCode=en-US';
@@ -196,7 +181,7 @@ class CalendarScreen extends Component {
             <SafeAreaView style={{ flex: 1 }}>
                 {this.renderHeader()}
 
-                {/* <WebView
+                <WebView
                     source={{
                         uri: vwuri,
                     }}
@@ -215,7 +200,12 @@ class CalendarScreen extends Component {
                     renderLoading={this.LoadingIndicatorView}
                     onMessage={this.onMessage}
                     injectedJavaScript={this.runFirst()}
-                /> */}
+                />
+                <Button
+                    onPress={()=>this.props.navigation.navigate(Screens.DETAIL_SCREEN)}
+                    text="Move To Detail"
+                    secondaryButton={true}
+                />
             </SafeAreaView>
 
         );
@@ -263,7 +253,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         getCases: (token) => {
             dispatch(CalendarAction.getCases(token, ownProps.navigation));
         },
-        saveSelectedCase: (selectedCase) =>{
+        saveSelectedCase: (selectedCase) => {
             dispatch(CalendarAction.saveSelectedCase(selectedCase));
         }
     }

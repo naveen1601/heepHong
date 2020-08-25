@@ -1,29 +1,47 @@
-import { WebView } from 'react-native-webview';
+
 import React, { Component } from 'react';
 import {
     StyleSheet,
+    ScrollView,
+    View
 } from 'react-native';
 import DetailScreenStyles from './DetailScreenStyles';
 import { create } from '../../helpers/PlatformSpecificStyles';
 import Text from '../../baseComponents/text/Text';
-import { SafeAreaView } from 'react-native-safe-area-context';
-
-class DetailScreen extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
+import ActivityBox from '../../components/activityBox/ActivityBox';
+import moment from 'moment';
 
 
-    render() {
-        return (
-            <SafeAreaView>
-               {/* <ActivityBox/> */}
-               <Text>Detail Screen</Text>
-            </SafeAreaView>
-        )
-    }
+const DetailScreen = () => {
+
+    const itemDescription = (label, text) => (
+        <View style={styles.subDiscriptionBox}>
+            <Text style={styles.subDiscriptionLabel}>{label}</Text>
+            <Text style={styles.subDiscriptionText}>{text}</Text>
+        </View>
+    )
+
+    return (
+        <ScrollView>
+            {/* <ActivityBox/> */}
+            <View style={styles.headerSection}>
+                <Text style={styles.headerText}>{moment().format('DD MMM YYYY, ddd')}</Text>
+            </View>
+            <View style={styles.descriptionSection}>
+                {itemDescription('Class', 'PST')}
+                {itemDescription('Staff', 'PST')}
+                {itemDescription('Time', 'PST')}
+                {itemDescription('Duration', 'PST')}
+                {itemDescription('Venue', 'PST')}
+                {itemDescription('Address', 'PST')}
+                {itemDescription('Contact', 'PST')}
+                {itemDescription('Remark', 'PST')}
+            </View>
+
+        </ScrollView>
+    )
 }
+
 
 let styles = create(DetailScreenStyles);
 

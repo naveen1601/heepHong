@@ -20,7 +20,8 @@ class ActivityScreen extends Component {
     render() {
         return (
             <SafeAreaView>
-               <ActivityBox/>
+               {/* <ActivityBox/> */}
+               <Text>No Activity to show</Text>
             </SafeAreaView>
         )
     }

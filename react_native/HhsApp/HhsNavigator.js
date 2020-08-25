@@ -80,8 +80,8 @@ const Tabs = () => {
                 activeTintColor: '#f59042',
 
             }}>
-            <BottomTabs.Screen name={Screens.CALENDAR_SCREEN}
-                component={CalendarScreen}
+            <BottomTabs.Screen name={'CALENDAR_AND_DETAIL'}
+                component={CalendarNestedStack}
                 options={({ navigation }) => {
                     return {
                         tabBarIcon: (navigation) => (
@@ -89,7 +89,7 @@ const Tabs = () => {
                                 iconName={'calendar'} />
                         ),
                         tabBarLabel: I18n.t('navigator.calendar'),
-                        color: '#f59042'
+                        color: '#f59042',
                     }
                 }}
             />
@@ -138,6 +138,24 @@ const Tabs = () => {
     );
 }
 
+function CalendarNestedStack() {
+    return (
+        <Stack.Navigator mode='card' screenOptions={{
+            gestureEnabled: false,
+            headerBackTitleVisible: true
+        }}>
+            <Stack.Screen name={Screens.CALENDAR_SCREEN}
+                component={CalendarScreen}
+                options={{headerShown: false}}
+            />
+            <Stack.Screen name={Screens.DETAIL_SCREEN}
+                component={DetailScreen}
+                options={{ headerTitle: I18n.t('navigator.detail') }} />
+
+        </Stack.Navigator>
+    );
+}
+
 function MyStack() {
     return (
         <Stack.Navigator mode='card' screenOptions={{
@@ -148,13 +166,9 @@ function MyStack() {
                 component={LoginScreen}
                 options={{ headerTitle: 'Heep Hong Society' }} />
 
-            <Stack.Screen name={'TAB'}
+            <Stack.Screen name={Screens.TAB}
                 component={Tabs}
                 options={{ headerMode: 'none', headerShown: false }} />
-
-            {/* <Stack.Screen name={'detail'}
-                component={DetailScreen}
-                options={{ headerTitle: I18n.t('navigator.detail') }} /> */}
 
         </Stack.Navigator>
     );
@@ -167,8 +181,8 @@ const HhsNavigator = (props) => {
                 barStyle="dark-content" translucent={true} />
             <SafeAreaProvider>
                 <NavigationContainer>
-                    {/* <MyStack /> */}
-                    <Tabs/>
+                    <MyStack />
+                    {/* <Tabs/> */}
                 </NavigationContainer>
             </SafeAreaProvider>
             <AppLevelSpinner />
