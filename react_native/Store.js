@@ -6,6 +6,9 @@ import { persistStore, persistCombineReducers, createMigrate } from 'redux-persi
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import getStoredStateMigrateV4 from 'redux-persist/lib/integration/getStoredStateMigrateV4';
 import login from './containers/loginScreen/LoginReducer';
+import spinner from './containers/spinner/SpinnerReducer';
+import calendar from './containers/calendarScreen/CalendarReducer';
+
 // import leadersBoard from './containers/leadersBoardScreen/LeadersBoardReducer'
 
 const oldConfig = {
@@ -23,7 +26,7 @@ function getStore() {
     };
 
     //let reducers = persistCombineReducers(config, { login, leadersBoard });
-    let reducers = persistCombineReducers(config, { login });
+    let reducers = persistCombineReducers(config, { login, spinner, calendar });
     
     let store = createStore(
         reducers,

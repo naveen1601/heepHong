@@ -17,20 +17,34 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Button from '../../baseComponents/button/Button';
-
+import { connect } from 'react-redux';
+import _ from 'lodash';
+import CalendarAction from './CalendarAction';
+import RNPickerSelect, { defaultStyles } from 'react-native-picker-select';
 
 class CalendarScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
             selectedOption: 'Monthly',
-            name:'sss'
+            tempState: 0
         };
         this.calendarTypes = ['Monthly', 'Weekly', 'Daily']
         this.webviewRef = createRef();
+        this.eventCollection = {
+            'Monthly': 'SwithToMonth',
+            'Weekly': 'SwithToWeek',
+            'Daily': 'SwithToDay',
+            'Today': 'SwithToToday',
+            'CaseIdLoad': 'LoadCalendarByCaseId'
+        }
 
     }
 
+    componentDidMount() {
+        // this.props.getCases();
+
+    }
 
     LoadingIndicatorView = () => {
         return (
@@ -38,33 +52,17 @@ class CalendarScreen extends Component {
         )
     }
 
-    handleCalendarOptionSelection = value => {
-        this.setState({
-            selectedOption: value
-        })
-    };
-
     onMessage = (event) => {
-        //alert(JSON.stringify(event.nativeEvent.data)); 
+        alert(JSON.stringify(event.nativeEvent.data));
     }
 
-    renderCalendarButton = () => (
-        <View style={styles.buttonConatiner}>
-            {this.calendarTypes.map((item) => {
-                const style = (item == this.state.selectedOption) ? styles.selectedButton : styles.unSelectedButton;
-                return (
-                    <FlatButton
-                        onPress={this.handleCalendarOptionSelection}
-                        text={item}
-                        style={style}
-                    />
-                )
-
-            })}
-        </View>
-    )
-    handleCaseOption = () => { }
-    handleTodaySelection = () => { }
+    handleTodaySelection = () => {
+        const sentToWebView = {
+            method: this.eventCollection['Today'],
+        }
+        let injectedData = `window.postMessage(${JSON.stringify(sentToWebView)}, "*");`;
+        this.webviewRef.current.injectJavaScript(injectedData);
+    }
 
     runFirst = () => {
         // const sentToWebView= {
@@ -87,54 +85,118 @@ class CalendarScreen extends Component {
         `)
     };
 
-    handleClickn = () => {
+    // handleClickn = () => {
+    //     // data.method == "LoadCalendarByCaseId"   // to load cases params  LanguageCode & CaseId
+    //     // data.method == "SwithToMonth" // no parameter required
+    //     // data.method == "SwithToWeek" // no parameter required
+    //     // data.method == "SwithToDay" // no parameter required
+    //     // data.method == "SwithToToday" // no parameter required
+    //     const sentToWebView = {
+    //         CaseId: 8377,
+    //         method: "LoadCalendarByCaseId",
+    //         LanguageCode: 'en-US'
+    //     }
+    //     let injectedData = `window.postMessage(${JSON.stringify(sentToWebView)}, "*");`;
+    //     this.webviewRef.current.injectJavaScript(injectedData);
+    // }
+
+    handleCalendarOptionSelection = value => {
+
         this.setState({
-            name: 'abhi'
-        });
-        //this.webviewRef && this.webviewRef.current.reload();
+            selectedOption: value
+        })
+
+        const methodName = this.eventCollection[value]
+
         const sentToWebView = {
-            CaseId: 8377,
-            method: "LoadCalendarByCaseId",
-            LanguageCode: 'en-US'
+            method: methodName,
         }
         let injectedData = `window.postMessage(${JSON.stringify(sentToWebView)}, "*");`;
         this.webviewRef.current.injectJavaScript(injectedData);
+    };
+
+    renderCalendarButton = () => (
+        <View style={styles.buttonConatiner}>
+            {this.calendarTypes.map((item) => {
+                const style = (item == this.state.selectedOption) ? styles.selectedButton : styles.unSelectedButton;
+                return (
+                    <FlatButton
+                        onPress={this.handleCalendarOptionSelection}
+                        text={item}
+                        style={style}
+                    />
+                )
+            })}
+        </View>
+    );
+
+    handleCaseOption = (value) => {
+        this.props.saveSelectedCase(value);
     }
 
-    renderHeader = () => (
+    renderHeader = () => {
+
+        // const selectedNameLabel = this.props.languageSelected == 'en' ? this.props.selectedCase.DisplayEnglish : this.props.selectedCase.DisplayChinese;
+        // const selectedCase = {
+        //     label: selectedNameLabel,
+        //     value: this.props.selectedCase
+        // }
+        const casesList = this.props.cases.map(item=>{
+            const nameLabel = this.props.languageSelected == 'en' ? item.DisplayEnglish : item.DisplayChinese;
+            return {
+                label: nameLabel,
+                value: item.Key,
+            }
+        })
+        
+        return(
         <View style={styles.calendarHeader}>
-            <TouchableOpacity
-                onPress={this.handleCaseOption}>
+            {/* <TouchableOpacity
+                onPress={this.handleCaseOption}> */}
                 <View style={styles.caseContainer}>
                     <FontAwesome name={'user-o'}
                         style={styles.userIcon}
                         size={16} />
-                    <Text style={styles.caseName}>
+                    <RNPickerSelect
+                        placeholder={{}}
+                        items={casesList}
+                        onValueChange={value => this.handleCaseOption(value)}
+                        useNativeAndroidPickerStyle={false}
+                        InputAccessoryView={() => null}
+                        style={pickerSelectStyles}
+                        value={this.props.selectedCase?.Key || this.props.selectedCase}
+                        Icon={() => {
+                            return <AntDesign name={'down'}
+                                style={styles.arrowIcon}
+                                size={8} />;
+                        }}
+                    />
+                    {/* <Text style={styles.caseName}>
                         Case Name
-                        </Text>
+                    </Text>
                     <AntDesign name={'down'}
                         style={styles.arrowIcon}
-                        size={8} />
+                        size={8} /> */}
                 </View>
-            </TouchableOpacity>
+            {/* </TouchableOpacity> */}
 
             {this.renderCalendarButton()}
             <TouchableOpacity style={styles.caseContainer}
                 onPress={this.handleTodaySelection}>
                 <MaterialCommunityIcons name={'calendar-today'}
-                    style={styles.userIcon}
-                    size={21} />
+                    style={styles.todayIcon}
+                    size={22} />
             </TouchableOpacity>
         </View>
-    )
+    )}
 
     render() {
-        const vwuri = 'http://hhs-cam2.eastasia.cloudapp.azure.com/hhsmobile?token=qyy_mrt1tiOMUumJOUHgibjsO_RSIijipBaUr2kQGH5RqVH8cx4nc88_543xgLRqrfUryuQloN4tK6Oa1AKLz6QMqNFKnFTmO16GzvZcKXEY6QPe8Gy6anuCGRAPb5K3jaHiTNNdh9rRIUF3TeMzBnPzF6r-c1yMHzt5WcMfgl97ilzIsDmGGgRSAAHpjhXWDfH2k_EXoZ2gLAZ_W6UNWdiyrJEHtwPU6I02DqFe2LE&CaseId=1234&LanguageCode=en-US';
+        const vwuri = 'http://hhs-cam2.eastasia.cloudapp.azure.com/hhsmobile?token=qyy_mrt1tiOMUumJOUHgibjsO_RSIijipBaUr2kQGH5RqVH8cx4nc88_543xgLRqrfUryuQloN4tK6Oa1AKLz6QMqNFKnFTmO16GzvZcKXEY6QPe8Gy6anuCGRAPb5K3jaHiTNNdh9rRIUF3TeMzBjFQMmNkACtMdtXWEeaRYoo_Lsy2fmXsUO3gcOf13QJi4_PQD-lXG-q3YSUB3BXxS65d9QevWds-zWmeHBnCvpo&CaseId=4543&LanguageCode=en-US';
         return (
             <SafeAreaView style={{ flex: 1 }}>
                 {this.renderHeader()}
 
-                <WebView
+                {/* <WebView
                     source={{
                         uri: vwuri,
                     }}
@@ -153,12 +215,7 @@ class CalendarScreen extends Component {
                     renderLoading={this.LoadingIndicatorView}
                     onMessage={this.onMessage}
                     injectedJavaScript={this.runFirst()}
-                />
-                <Button
-                    onPress={this.handleClickn}
-                    text='Change Case to 8377'
-                    secondaryButton={true}
-                />
+                /> */}
             </SafeAreaView>
 
         );
@@ -166,6 +223,50 @@ class CalendarScreen extends Component {
 }
 
 let styles = create(CalendarScreenStyles);
+const pickerSelectStyles = StyleSheet.create({
+    inputIOS: {
+        fontSize: 14,
+        // paddingVertical: 12,
+        color: 'black',
+        paddingRight: 10, // to ensure the text is never behind the icon
+    },
+    inputAndroid: {
+        fontSize: 14,
+        // paddingVertical: 10,
+        color: 'black',
+        paddingRight: 10, // to ensure the text is never behind the icon
+    },
+});
 
+const mapStateToProps = (state) => {
+    return {
+        token: _.get(state, 'login.userData.Token'),
+        cases: _.get(state, 'calendar.cases'),
+        selectedCase: _.get(state, 'calendar.selectedCase'),
+        languageSelected: _.get(state, 'login.language')
+    }
+}
 
-export default CalendarScreen;
+export const mergeProps = (stateProps, dispatchProps, ownProps) => {
+
+    let actionProps = Object.assign({}, dispatchProps, {
+        getCases: () => {
+            dispatchProps.getCases(stateProps.token);
+        },
+    });
+
+    return Object.assign({}, ownProps, stateProps, actionProps);
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        getCases: (token) => {
+            dispatch(CalendarAction.getCases(token, ownProps.navigation));
+        },
+        saveSelectedCase: (selectedCase) =>{
+            dispatch(CalendarAction.saveSelectedCase(selectedCase));
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(CalendarScreen)

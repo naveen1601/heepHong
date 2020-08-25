@@ -1,0 +1,67 @@
+import axios from "axios";
+import links from './links';
+import ObjectHelper from "./objectHelpers";
+import Configs from "../Configs";
+
+
+function getLocation(location) {
+    return links.baseApi + location;
+}
+
+function status(response) {
+    if (response.status === 204) {
+        return Promise.resolve({
+            json: () => ({})
+        });
+    }
+    if (response.status >= 200 && response.status < 300) {
+        return Promise.resolve(response.data);
+    } else {
+        return Promise.reject({ statusText: response.statusText, status: response.status, responseJson: response.data });
+    }
+}
+
+let Api = {
+    doGet(location, body, successCallback, errorCallback, token) {
+
+        let url = getLocation(location) + ObjectHelper.getQueryString(body);
+        let headers = {
+            "Content-Type": "application/json"
+        };
+        if (token) {
+            headers["UserToken"] = `${token}`;
+        }
+
+        axios.get(url, {
+            headers, 
+            withCredentials: true,
+            timeout: 1000,})
+            .then(status)
+            .then(successCallback)
+            .catch(res => errorCallback({
+                responseJson: res.response?.data,
+                status: res.response?.status,
+            }));
+    },
+
+    doPost(location, body, successCallback, errorCallback, token) {
+        let url = getLocation(location);
+        let headers = {
+            "Content-Type": "application/json"
+        };
+        if (token) {
+            headers["UserToken"] = `${token}`;
+        }
+        axios.post(url, JSON.stringify(body),{
+            headers,
+            withCredentials: true
+        }).then(status)
+            .then(successCallback)
+            .catch(res => errorCallback({
+                error: res.response.data.Error,
+                status: res.response.status,
+            }));
+    },
+    
+}
+export default Api;

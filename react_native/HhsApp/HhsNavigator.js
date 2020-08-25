@@ -27,6 +27,8 @@ import CalendarScreen from '../containers/calendarScreen/CalendarScreen';
 import MoreScreen from '../containers/moreScreen/MoreScreen';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import NativeToWeb from '../containers/NativeToWeb';
+import DetailScreen from '../containers/detailScreen/DetailScreen';
+import AppLevelSpinner from './AppLevelSpinner';
 
 // import Text from '../baseComponents/text/Text';
 
@@ -149,6 +151,11 @@ function MyStack() {
             <Stack.Screen name={'TAB'}
                 component={Tabs}
                 options={{ headerMode: 'none', headerShown: false }} />
+
+            {/* <Stack.Screen name={'detail'}
+                component={DetailScreen}
+                options={{ headerTitle: I18n.t('navigator.detail') }} /> */}
+
         </Stack.Navigator>
     );
 }
@@ -160,9 +167,12 @@ const HhsNavigator = (props) => {
                 barStyle="dark-content" translucent={true} />
             <SafeAreaProvider>
                 <NavigationContainer>
-                    <MyStack />
+                    {/* <MyStack /> */}
+                    <Tabs/>
                 </NavigationContainer>
             </SafeAreaProvider>
+            <AppLevelSpinner />
+
         </>
     );
 }

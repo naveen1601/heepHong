@@ -56,5 +56,8 @@ export default {
     loginFields: {
         paddingTop: 50
     },
+    errorBox:{
+        borderColor: $_.errorBorderColor
+    }
 }
 

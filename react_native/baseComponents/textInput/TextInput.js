@@ -67,7 +67,6 @@ class TextInput extends Component {
                     placeholderTextColor={PropStyles.textInputPlaceholderTextColor}
                     editable={this.props.editable}
                     secureTextEntry={this.props.secureTextEntry}
-                    autoCapitalize = {'none'}
                     autoCompleteType = {'off'}
                     textContentType={'none'}
                     maxLength={this.props.maxLength}

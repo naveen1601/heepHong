@@ -5,7 +5,7 @@ export default {
     ActivityIndicatorStyle: {
         // flex: 1,
         // justifyContent: 'space-evenly',
-        // height: '100%' 
+        height: '100%' 
     },
 
     unSelectedButton: {
@@ -18,34 +18,44 @@ export default {
         fontSize: $primary.baseFontSize + 2
     },
     userIcon: {
-        color: $primary.black
+        color: $primary.black,
+        paddingRight:5,
+        android:{ paddingTop: 16 }
     },
     arrowIcon: {
         color: $primary.black,
-        paddingTop: 7
+        android:{ paddingTop: 20 },
+        ios:{ paddingTop: 5 }
+    },
+
+    todayIcon:{
+        android:{ paddingTop: 15 },
+        ios:{ top: -3 }
     },
 
     caseContainer: {
         flexDirection: 'row',
-        // borderWidth:1,
-        paddingTop: 7
+        ios:{ paddingTop: 10 }
+
     },
     buttonConatiner: {
         flexDirection: 'row',
     },
 
-    caseName: {
-        paddingHorizontal: 4,
-        paddingTop: 1,
-        fontSize: $primary.baseFontSize + 2,
-        // flexWrap: 'wrap'
-    },
+    // caseName: {
+    //     paddingHorizontal: 4,
+    //     paddingTop: 1,
+    //     fontSize: $primary.baseFontSize + 2,
+    //     // flexWrap: 'wrap'
+    // },
 
     calendarHeader: {
         flexDirection: 'row',
         // padding: 10,
         justifyContent: 'space-around',
-        flexWrap: 'wrap',        
+        flexWrap: 'wrap',   
+        // borderWidth:1,
+
     }
 
     // flatButton: {

@@ -13,7 +13,8 @@ export default {
     navigator:{
       calendar : '日曆',
       activity: '活動',
-      more: '更多'
+      more: '更多',
+      detail: '詳情'
     },
     activity:{
       today: '今天',

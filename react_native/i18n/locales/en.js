@@ -13,7 +13,8 @@ export default {
     navigator:{
       calendar : 'Calendar',
       activity: 'Activity',
-      more: 'More'
+      more: 'More',
+      detail: 'Detail'
     },
     activity:{
       today: 'Today',

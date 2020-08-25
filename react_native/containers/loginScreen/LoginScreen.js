@@ -17,14 +17,17 @@ import Text from '../../baseComponents/text/Text';
 import FlatButton from '../../baseComponents/button/FlatButton';
 import { Screens } from '../../helpers/screenHelpers';
 import I18n from '../../i18n/locales';
+import _ from 'lodash';
+import LoginAction from './LoginAction';
 
 class LoginScreen extends Component {
 
     state = {
         userName: '',
         password: '',
+        userNameHasError: '',
+        passwordHasError: ''
     };
-
 
     handleUserNameChange = (text) => {
         this.setState({ userName: text });
@@ -38,10 +41,14 @@ class LoginScreen extends Component {
 
 
     renderLoginModal = () => {
+        const userBoxStyle = [styles.textInputFieldsContainer], passwordBoxStyle = [styles.textInputFieldsContainer];
+        this.state.userNameHasError && userBoxStyle.push(styles.errorBox);
+        this.state.passwordHasError && passwordBoxStyle.push(styles.errorBox);
+
         return (
             <ScrollView keyboardShouldPersistTaps={'always'}>
                 <View style={styles.loginBox}>
-                    <View style={styles.textInputFieldsContainer}>
+                    <View style={userBoxStyle}>
                         <FontAwesome name={'user'}
                             style={styles.iconStyle}
                             size={20} />
@@ -51,19 +58,17 @@ class LoginScreen extends Component {
                             value={this.state.userName}
                             placeholder={I18n.t('login.userNamePlaceHolder')}
                             keyboardType="email-address"
-                            hasErrors={false}
                             autoCapitalize="none"
                             autoCorrect={false}
                         />
                     </View>
-                    <View style={styles.textInputFieldsContainer}>
+                    <View style={passwordBoxStyle}>
                         <Fontisto name={'locked'}
                             style={styles.iconStyle}
                             size={20} />
                         <PasswordInput onChangeText={this.handlePasswordChange}
                             testID="passwordTextInput"
                             placeholder={I18n.t('login.passwordPlaceHolder')}
-                            hasErrors={false}
                             maxLength={100}
                             value={this.state.password}
                             stacked />
@@ -88,8 +93,28 @@ class LoginScreen extends Component {
         );
     }
 
-    // handleLoginButton = () => this.props.navigation.navigate(Screens.LoginScreen);
-    handleLoginButton = () => this.props.navigation.replace(Screens.TAB);
+    isInputEmpty = (name) => {
+        return !_.isEmpty(String(name).trim())
+    }
+    areUserInputValid = () => {
+        const userNameValidation = this.isInputEmpty(this.state.userName);
+        const passwordValidation = this.isInputEmpty(this.state.password);
+
+        this.setState({
+            passwordHasError: !passwordValidation,
+            userNameHasError: !userNameValidation
+        });
+        return userNameValidation && passwordValidation;
+    }
+
+    handleLoginButton = () => {
+        if (this.areUserInputValid()) {
+            this.props.doLogin(this.state.userName, this.state.password, this.props.navigation);
+
+            //this.props.navigation.replace(Screens.TAB);
+        }
+    
+    }
 
     render() {
         return (
@@ -113,9 +138,9 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        dispatch1: () => {
-            dispatch(actionCreator)
-        }
+        doLogin: (userName, password) => {
+            dispatch(LoginAction.doLogin(userName, password, ownProps.navigation));
+        },
     }
 }
 
