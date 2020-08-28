@@ -1,14 +1,7 @@
 import React from 'react';
 
 import {
-    Image,
-    StyleSheet,
     StatusBar,
-    View,
-    Text,
-    TouchableOpacity,
-    ActivityIndicator,
-    I18nManager
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -29,6 +22,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import NativeToWeb from '../containers/NativeToWeb';
 import DetailScreen from '../containers/detailScreen/DetailScreen';
 import AppLevelSpinner from './AppLevelSpinner';
+import PrimarySettings from '../settings/styles/DefaultPrimarySettings';
 
 // import Text from '../baseComponents/text/Text';
 
@@ -38,7 +32,7 @@ const Stack = createStackNavigator();
 
 function RenderAntIcon(props) {
 
-    let customColor = props.navigation.focused ? '#E18128' : '#8E8E8F';
+    let customColor = props.navigation.focused ? PrimarySettings.primaryColor : PrimarySettings.tertiaryColor;
     return (
         <AntIcon name={props.iconName}
             style={{ color: customColor }}
@@ -48,7 +42,7 @@ function RenderAntIcon(props) {
 
 function RenderIonIcons(props) {
 
-    let customColor = props.navigation.focused ? '#E18128' : '#8E8E8F';
+    let customColor = props.navigation.focused ? PrimarySettings.primaryColor : PrimarySettings.tertiaryColor;
     return (
         <IonIcons name={props.iconName}
             style={{ color: customColor }}
@@ -58,7 +52,7 @@ function RenderIonIcons(props) {
 
 function RenderFeatherIcons(props) {
 
-    let customColor = props.navigation.focused ? '#f59042' : '#8E8E8F';
+    let customColor = props.navigation.focused ? PrimarySettings.primaryColor : PrimarySettings.tertiaryColor;
     return (
         <FeatherIcons name={props.iconName}
             style={{ color: customColor }}
@@ -77,7 +71,9 @@ const Tabs = () => {
             tabBarOptions={{
                 showIcon: true,
                 showLabel: true,
-                activeTintColor: '#f59042',
+                activeTintColor: PrimarySettings.primaryColor,
+                inactiveBackgroundColor: PrimarySettings.defaultHeaderAndBottomColor,
+                activeBackgroundColor: PrimarySettings.defaultHeaderAndBottomColor
 
             }}>
             <BottomTabs.Screen name={'CALENDAR_AND_DETAIL'}
@@ -89,7 +85,6 @@ const Tabs = () => {
                                 iconName={'calendar'} />
                         ),
                         tabBarLabel: I18n.t('navigator.calendar'),
-                        color: '#f59042',
                     }
                 }}
             />
@@ -102,7 +97,6 @@ const Tabs = () => {
                                 iconName={"md-notifications-outline"} />
                         ),
                         tabBarLabel: I18n.t('navigator.activity'),
-                        color: '#f59042',
                         headerShown: true
                     }
                 }
@@ -117,23 +111,9 @@ const Tabs = () => {
                                 iconName={"more-horizontal"} />
                         ),
                         tabBarLabel: I18n.t('navigator.more'),
-                        color: '#f59042'
                     }
                 }
                 } />
-            {/* <BottomTabs.Screen name={'temp'}
-                component={NativeToWeb}
-                options={({ navigation }) => {
-                    return {
-                        tabBarIcon: (navigation) => (
-                            <RenderFeatherIcons navigation={navigation}
-                                iconName={"more-horizontal"} />
-                        ),
-                        title: ()=><Text>{I18n.t('navigator.more')}</Text>,
-                        color: '#f59042'
-                    }
-                }
-                } /> */}
         </BottomTabs.Navigator>
     );
 }
@@ -142,15 +122,20 @@ function CalendarNestedStack() {
     return (
         <Stack.Navigator mode='card' screenOptions={{
             gestureEnabled: false,
-            headerBackTitleVisible: true
+            headerBackTitleVisible: false
         }}>
             <Stack.Screen name={Screens.CALENDAR_SCREEN}
                 component={CalendarScreen}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
             />
             <Stack.Screen name={Screens.DETAIL_SCREEN}
                 component={DetailScreen}
-                options={{ headerTitle: I18n.t('navigator.detail') }} />
+                options={{
+                    headerTitle: I18n.t('navigator.detail'),
+                    headerStyle: {
+                        backgroundColor: PrimarySettings.defaultHeaderAndBottomColor,
+                    },
+                }} />
 
         </Stack.Navigator>
     );
@@ -181,8 +166,8 @@ const HhsNavigator = (props) => {
                 barStyle="dark-content" translucent={true} />
             <SafeAreaProvider>
                 <NavigationContainer>
-                    <MyStack />
-                    {/* <Tabs/> */}
+                    {/* <MyStack />  */}
+                    <Tabs />
                 </NavigationContainer>
             </SafeAreaProvider>
             <AppLevelSpinner />

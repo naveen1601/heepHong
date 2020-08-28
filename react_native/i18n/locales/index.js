@@ -15,9 +15,9 @@ if (Array.isArray(locales)) {
 }
 
 I18n.translations = {
-  default: en,
-  en,
+  default: zh,
   zh,
+  en,
 };
 
 I18n.fallbacks = true;

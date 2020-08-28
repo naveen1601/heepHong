@@ -7,6 +7,8 @@ import Text from '../text/Text';
 import { create } from '../../helpers/PlatformSpecificStyles';
 import TextInput from '../textInput/TextInput';
 import PasswordInputStyles, { PropStyles } from './PasswordInputStyles';
+import I18n from '../../i18n/locales';
+
 
 class PasswordInput extends Component {
 
@@ -38,7 +40,7 @@ class PasswordInput extends Component {
     }
 
     render() {
-        let passwordVisibiltyText = this.state.showPassword ? 'Hide' : 'Show';
+        let passwordVisibiltyText = this.state.showPassword ? I18n.t('login.hide') :  I18n.t('login.show');
         let passwordVisibiltyTextColor = this.state.isTogglePassword ? PropStyles.showPasswordColor : PropStyles.hidePasswordColor;
         return (
             <View style={styles.passwordInputWrapper}

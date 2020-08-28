@@ -8,7 +8,10 @@ export default {
       userNamePlaceHolder: 'User name',
       passwordPlaceHolder: 'Password',
       loginButtonText: 'Login',
-      forgetPassword:'Forget Password'
+      forgetPassword:'Forget Password',
+      show: 'Show',
+      hide: 'Hide'
+
     },
     navigator:{
       calendar : 'Calendar',
@@ -19,5 +22,8 @@ export default {
     activity:{
       today: 'Today',
       yesterday: 'Yesterday',
+    },
+    api:{
+      language:'en-US'
     }
   }

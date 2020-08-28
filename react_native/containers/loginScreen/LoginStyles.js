@@ -30,10 +30,12 @@ export default {
     loginContainer: {        
         borderTopColor: $_.loginOptionBorderColor,
         // borderWidth: 1,
-        padding:50 
+        padding:50,
+        paddingTop:20
     },
     loginBox:{   
-        marginVertical:50,    
+        marginVertical:50,   
+        // borderWidth:1 
     },
     loginButton:{
         marginVertical:50,
@@ -58,6 +60,12 @@ export default {
     },
     errorBox:{
         borderColor: $_.errorBorderColor
+    },
+    logoImage:{
+        width:'100%',
+        resizeMode: 'stretch',
+        height: 110,
+        left:-10
     }
 }
 

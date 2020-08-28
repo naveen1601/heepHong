@@ -10,9 +10,11 @@ import { create } from '../../helpers/PlatformSpecificStyles';
 import Text from '../../baseComponents/text/Text';
 import ActivityBox from '../../components/activityBox/ActivityBox';
 import moment from 'moment';
+import { connect } from 'react-redux';
+import _ from 'lodash';
 
 
-const DetailScreen = () => {
+const DetailScreen = (props) => {
 
     const itemDescription = (label, text) => (
         <View style={styles.subDiscriptionBox}>
@@ -20,24 +22,30 @@ const DetailScreen = () => {
             <Text style={styles.subDiscriptionText}>{text}</Text>
         </View>
     )
+    const appointment = props.appointment;
 
+    const startTime = appointment.StartDate && moment(appointment.StartDate)
+    const endTime = appointment.EndDate && moment(appointment.EndDate)
+    const duration = appointment.EndDate && appointment.StartDate && moment.duration(endTime.diff(startTime));
     return (
-        <ScrollView>
-            {/* <ActivityBox/> */}
-            <View style={styles.headerSection}>
-                <Text style={styles.headerText}>{moment().format('DD MMM YYYY, ddd')}</Text>
-            </View>
-            <View style={styles.descriptionSection}>
-                {itemDescription('Class', 'PST')}
-                {itemDescription('Staff', 'PST')}
-                {itemDescription('Time', 'PST')}
-                {itemDescription('Duration', 'PST')}
-                {itemDescription('Venue', 'PST')}
-                {itemDescription('Address', 'PST')}
-                {itemDescription('Contact', 'PST')}
-                {itemDescription('Remark', 'PST')}
-            </View>
-
+        <ScrollView style={styles.detailContainer}>
+            {appointment &&
+                <>
+                    <View style={styles.headerSection}>
+                        <Text style={styles.headerText}>{moment(appointment.StartDate).format('DD MMM YYYY, ddd')}</Text>
+                    </View>
+                    <View style={styles.descriptionSection}>
+                        {itemDescription('Class', appointment.Class)}
+                        {itemDescription('Staff', appointment.StaffName)}
+                        {itemDescription('Time', appointment.Time)}
+                        {itemDescription('Duration', `${parseInt(duration.asMinutes())} min`)}
+                        {itemDescription('Venue', appointment.Venue)}
+                        {itemDescription('Address', appointment.Address)}
+                        {itemDescription('Contact', appointment.Contact)}
+                        {itemDescription('Remark', appointment.Remarks)}
+                    </View>
+                </>
+            }
         </ScrollView>
     )
 }
@@ -45,5 +53,17 @@ const DetailScreen = () => {
 
 let styles = create(DetailScreenStyles);
 
+const mapStateToProps = (state) => {
+    return {
+        appointment: _.get(state, 'calendar.selectedAppointment')
+    }
+}
 
-export default DetailScreen;
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        someAction: () => { }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DetailScreen);

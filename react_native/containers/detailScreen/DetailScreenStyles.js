@@ -2,10 +2,10 @@ import $_ from "../../settings/styles/DefaultPrimarySettings";
 
 export default {
 
-    // ActivityIndicatorStyle: {
-    //     flex: 1,
-    //     justifyContent: 'space-evenly'
-    // }
+    detailContainer: {
+        backgroundColor: $_.white,
+        height:'100%'
+    },
 
     subDiscriptionBox:{
         flexDirection: 'row',

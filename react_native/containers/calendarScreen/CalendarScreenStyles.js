@@ -2,6 +2,12 @@ import $primary from '../../settings/styles/DefaultPrimarySettings';
 
 export default {
 
+    calendarContainer:{
+        flex: 1,
+        backgroundColor: $primary.white,
+        height:'100%'
+    },
+
     ActivityIndicatorStyle: {
         // flex: 1,
         // justifyContent: 'space-evenly',
@@ -42,13 +48,6 @@ export default {
         flexDirection: 'row',
     },
 
-    // caseName: {
-    //     paddingHorizontal: 4,
-    //     paddingTop: 1,
-    //     fontSize: $primary.baseFontSize + 2,
-    //     // flexWrap: 'wrap'
-    // },
-
     calendarHeader: {
         flexDirection: 'row',
         // padding: 10,
@@ -57,11 +56,5 @@ export default {
         // borderWidth:1,
 
     }
-
-    // flatButton: {
-    //     color: $primary.flatButtonColor,
-    //     fontSize: $primary.flatButtonFontSize,
-    //     textDecorationLine: 'underline'
-    //   }
 
 }

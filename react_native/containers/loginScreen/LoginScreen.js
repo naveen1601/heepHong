@@ -10,7 +10,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Button from '../../baseComponents/button/Button';
 import {
     View,
-    TouchableOpacity,
+    Image,
     ScrollView
 } from 'react-native';
 import Text from '../../baseComponents/text/Text';
@@ -19,7 +19,6 @@ import { Screens } from '../../helpers/screenHelpers';
 import I18n from '../../i18n/locales';
 import _ from 'lodash';
 import LoginAction from './LoginAction';
-
 class LoginScreen extends Component {
 
     state = {
@@ -84,7 +83,7 @@ class LoginScreen extends Component {
                             onPress={this.handleLoginButton}
                             text={I18n.t('login.loginButtonText')}
                             secondaryButton={true}
-                            style= {styles.buttonStyle}
+                            style={styles.buttonStyle}
                         />
                     </View>
                 </View>
@@ -113,14 +112,21 @@ class LoginScreen extends Component {
 
             //this.props.navigation.replace(Screens.TAB);
         }
-    
+
     }
 
     render() {
         return (
-            <View style={styles.loginContainer}>
-                {this.renderLoginModal()}
-            </View>
+            <>
+
+                <View style={styles.loginContainer}>
+                    <Image
+                        style={styles.logoImage}
+                        source={require('../../staticData/assests/Hhs_Logo.png')}
+                    />
+                    {this.renderLoginModal()}
+                </View>
+            </>
         );
     }
 }

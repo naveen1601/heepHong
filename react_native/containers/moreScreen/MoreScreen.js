@@ -5,33 +5,39 @@ import Text from "../../baseComponents/text/Text";
 import Button from "../../baseComponents/button/Button";
 import { connect } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { resetScreen, Screens } from '../../helpers/screenHelpers';
+import { create } from '../../helpers/PlatformSpecificStyles';
+import MoreStyles from './MoreStyles';
+
 
 
 class MoreScreen extends Component {
 
     state = {
-        languageSelected: 'en'
+        languageSelected: 'zh'
     }
 
-    onChangeLanguage = (languageSelected) => {
-        this.props.updateUserLanguage('zh')
+    onChangeLanguage = () => {
+        this.props.updateUserLanguage('zh');
+        resetScreen(this.props.navigation, Screens.TAB);
+
     }
 
-    onChangeEnglish = (languageSelected) => {
+    onChangeEnglish = () => {
 
         this.props.updateUserLanguage('en');
-        this.forceUpdate();
+        resetScreen(this.props.navigation, Screens.TAB);
     }
 
     render() {
         console.log('lan ', this.props.userLanguage);
         I18n.locale = this.props.userLanguage;
         return (
-            <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <SafeAreaView style={ styles.moreContainer}>
                 <Text>{I18n.t('hompage.language')}</Text>
                 <Button
                     onPress={this.onChangeLanguage}
-                    text="Chinese"
+                    text="语言"
                     secondaryButton={true}
                 />
                 <Button
@@ -44,6 +50,9 @@ class MoreScreen extends Component {
         );
     }
 }
+
+let styles = create(MoreStyles);
+
 
 const mapStateToProps = (state) => {
     console.log(state);

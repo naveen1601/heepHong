@@ -8,8 +8,8 @@ export default {
     getCases: function (token, navigation) {
 
         return function (dispatch) {
-            dispatch(SpinnerActions.showSpinner());
 
+            dispatch(SpinnerActions.showSpinner());
             let loginSuccess = (response) => {
                 dispatch(SpinnerActions.hideSpinner());
                 dispatch({
@@ -46,6 +46,42 @@ export default {
                 selectedCase: selectedCase
             });
         }
+    },
+
+    getAppointmentDetails: function(appointmentId, token, navigation){
+
+        return function (dispatch) {
+
+            dispatch(SpinnerActions.showSpinner());
+            let loginSuccess = (response) => {
+                dispatch(SpinnerActions.hideSpinner());
+                dispatch({
+                    type: Constants.ACTIONS.SAVE_APPOINTMENT,
+                    selectedAppointment: response
+                });
+                navigation.navigate(Screens.DETAIL_SCREEN)
+            };
+
+            let errorCallback = (errorResponse) => {
+                dispatch(SpinnerActions.hideSpinner());
+                if (errorResponse.status === 401) {
+                    dispatch({
+                        type: Constants.ACTIONS.CLEAR_DATA
+                    });
+                    resetScreen(navigation,Screens.LOGIN_SCREEN)
+                }
+                else {
+                    dispatch({
+                        type: Constants.ACTIONS.GENERAL_ERROR,
+                        message: errorResponse.error.message
+                    });
+                }
+
+            };
+
+            Api.doGet(locations.APPOINTMENT, {id: appointmentId}, loginSuccess, errorCallback, token);
+        }
+
     }
 
 }

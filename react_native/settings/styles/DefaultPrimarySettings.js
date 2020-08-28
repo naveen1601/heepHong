@@ -4,6 +4,7 @@ export default {
     secondaryColor: '#E18128',
     tertiaryColor: '#8E8E8F',
     underlineColor: '#edb37e',
+    defaultHeaderAndBottomColor: '#EEEEEE',
     black: '#000000',
     white: '#FFFFFF',
     iOSStatusBarStyle: 1,

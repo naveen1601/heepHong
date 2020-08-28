@@ -2,7 +2,7 @@ import Constants from './LoginConstants';
 import { REHYDRATE } from 'redux-persist';
 
 let initialState = {
-    language: 'en',
+    language: 'zh',
     isLoggedIn: false,
     userData: {},
     errorMessage: ''

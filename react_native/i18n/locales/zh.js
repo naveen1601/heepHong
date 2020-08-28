@@ -8,7 +8,9 @@ export default {
       userNamePlaceHolder: '帳號',
       passwordPlaceHolder: '密碼',
       loginButtonText: '登入',
-      forgetPassword: '忘記密碼'
+      forgetPassword: '忘記密碼',
+      show: '表演',
+      hide: '隐藏'
     },
     navigator:{
       calendar : '日曆',
@@ -19,5 +21,8 @@ export default {
     activity:{
       today: '今天',
       yesterday: '昨天',
+    },
+    api:{
+      language:'zh-CN'
     }
   }

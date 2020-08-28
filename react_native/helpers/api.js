@@ -1,7 +1,7 @@
 import axios from "axios";
 import links from './links';
 import ObjectHelper from "./objectHelpers";
-import Configs from "../Configs";
+import I18n from '../i18n/locales';
 
 
 function getLocation(location) {
@@ -26,7 +26,8 @@ let Api = {
 
         let url = getLocation(location) + ObjectHelper.getQueryString(body);
         let headers = {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "UserLanguage": I18n.t('api.language')
         };
         if (token) {
             headers["UserToken"] = `${token}`;
@@ -47,7 +48,8 @@ let Api = {
     doPost(location, body, successCallback, errorCallback, token) {
         let url = getLocation(location);
         let headers = {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "UserLanguage": I18n.t('api.language')
         };
         if (token) {
             headers["UserToken"] = `${token}`;

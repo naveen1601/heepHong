@@ -22,13 +22,14 @@ import _ from 'lodash';
 import CalendarAction from './CalendarAction';
 import RNPickerSelect, { defaultStyles } from 'react-native-picker-select';
 import { Screens } from '../../helpers/screenHelpers';
+import I18n from '../../i18n/locales';
 
 class CalendarScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
             selectedOption: 'Monthly',
-            tempState: 0
+            // key: 0
         };
         this.calendarTypes = ['Monthly', 'Weekly', 'Daily']
         this.webviewRef = createRef();
@@ -43,8 +44,7 @@ class CalendarScreen extends Component {
     }
 
     componentDidMount() {
-        // this.props.getCases();
-
+        this.props.getCases();
     }
 
     LoadingIndicatorView = () => {
@@ -54,7 +54,12 @@ class CalendarScreen extends Component {
     }
 
     onMessage = (event) => {
-        //alert(JSON.stringify(event.nativeEvent.data));
+        //alert(JSON.stringify(event.nativeEvent.data))
+
+        if (event.nativeEvent.data != 'Loaded') {
+            //alert(event.nativeEvent.data)
+            this.props.getAppointmentDetails(event.nativeEvent.data);
+        }
     }
 
     handleTodaySelection = () => {
@@ -66,37 +71,18 @@ class CalendarScreen extends Component {
     }
 
     runFirst = () => {
-         
+
         const sentToWebView = {
-            CaseId: 4543,
+            CaseId: this.props.selectedCase,
             method: "LoadCalendarByCaseId",
-            LanguageCode: 'zh-CN'
+            LanguageCode: I18n.t('api.language')
         }
-        
-        // let injectedData = `window.postMessage(${JSON.stringify(sentToWebView)}, "*");`;
-        // console.log('sss ',stateName) 
-        // window.postMessage(${JSON.stringify(sentToWebView)}, "*");
 
         return (`
             window.postMessage(${JSON.stringify(sentToWebView)}, "*");
           true; // note: this is required, or you'll sometimes get silent failures
         `)
     };
-
-    // handleClickn = () => {
-    //     // data.method == "LoadCalendarByCaseId"   // to load cases params  LanguageCode & CaseId
-    //     // data.method == "SwithToMonth" // no parameter required
-    //     // data.method == "SwithToWeek" // no parameter required
-    //     // data.method == "SwithToDay" // no parameter required
-    //     // data.method == "SwithToToday" // no parameter required
-    //     const sentToWebView = {
-    //         CaseId: 8377,
-    //         method: "LoadCalendarByCaseId",
-    //         LanguageCode: 'en-US'
-    //     }
-    //     let injectedData = `window.postMessage(${JSON.stringify(sentToWebView)}, "*");`;
-    //     this.webviewRef.current.injectJavaScript(injectedData);
-    // }
 
     handleCalendarOptionSelection = value => {
 
@@ -129,7 +115,16 @@ class CalendarScreen extends Component {
     );
 
     handleCaseOption = (value) => {
+
         this.props.saveSelectedCase(value);
+        const sentToWebView = {
+            CaseId: value,
+            method: "LoadCalendarByCaseId",
+            LanguageCode: I18n.t('api.language')
+        }
+
+        let injectedData = `window.postMessage(${JSON.stringify(sentToWebView)}, "*");`;
+        this.webviewRef.current.injectJavaScript(injectedData);
     }
 
     renderHeader = () => {
@@ -155,7 +150,7 @@ class CalendarScreen extends Component {
                         useNativeAndroidPickerStyle={false}
                         InputAccessoryView={() => null}
                         style={pickerSelectStyles}
-                        value={this.props.selectedCase?.Key || this.props.selectedCase}
+                        value={this.props.selectedCase}
                         Icon={() => {
                             return <AntDesign name={'down'}
                                 style={styles.arrowIcon}
@@ -176,14 +171,15 @@ class CalendarScreen extends Component {
     }
 
     render() {
-        const vwuri = 'http://hhs-cam2.eastasia.cloudapp.azure.com/hhsmobile?token=qyy_mrt1tiOMUumJOUHgibjsO_RSIijipBaUr2kQGH5RqVH8cx4nc88_543xgLRqrfUryuQloN4tK6Oa1AKLz6QMqNFKnFTmO16GzvZcKXEY6QPe8Gy6anuCGRAPb5K3jaHiTNNdh9rRIUF3TeMzBjFQMmNkACtMdtXWEeaRYoo_Lsy2fmXsUO3gcOf13QJi4_PQD-lXG-q3YSUB3BXxS65d9QevWds-zWmeHBnCvpo&CaseId=4543&LanguageCode=en-US';
+        const vwUri = `http://hhs-cam2.eastasia.cloudapp.azure.com/hhsmobile?token=${this.props.token}&LanguageCode=${I18n.t('api.language')}`;
         return (
-            <SafeAreaView style={{ flex: 1 }}>
+            <SafeAreaView style={{flex: 1 }}>
+            <View style={styles.calendarContainer}>
                 {this.renderHeader()}
 
                 <WebView
                     source={{
-                        uri: vwuri,
+                        uri: vwUri,
                     }}
                     ref={this.webviewRef}
                     javaScriptEnabled={true}
@@ -201,11 +197,12 @@ class CalendarScreen extends Component {
                     onMessage={this.onMessage}
                     injectedJavaScript={this.runFirst()}
                 />
-                <Button
-                    onPress={()=>this.props.navigation.navigate(Screens.DETAIL_SCREEN)}
+                {/* <Button
+                    onPress={() => this.props.navigation.navigate(Screens.DETAIL_SCREEN)}
                     text="Move To Detail"
                     secondaryButton={true}
-                />
+                /> */}
+                </View>
             </SafeAreaView>
 
         );
@@ -243,6 +240,10 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
         getCases: () => {
             dispatchProps.getCases(stateProps.token);
         },
+        getAppointmentDetails: (appointmentId) => {
+            dispatchProps.getAppointmentDetails(appointmentId, stateProps.token);
+        }
+
     });
 
     return Object.assign({}, ownProps, stateProps, actionProps);
@@ -255,6 +256,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         },
         saveSelectedCase: (selectedCase) => {
             dispatch(CalendarAction.saveSelectedCase(selectedCase));
+        },
+
+        getAppointmentDetails: (appointmentId, token) => {
+            dispatch(CalendarAction.getAppointmentDetails(appointmentId, token, ownProps.navigation));
         }
     }
 }

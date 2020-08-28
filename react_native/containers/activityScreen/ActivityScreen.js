@@ -1,6 +1,7 @@
 import { WebView } from 'react-native-webview';
 import React, { Component } from 'react';
 import {
+    View,
     StyleSheet,
     ActivityIndicator,
 } from 'react-native';
@@ -20,8 +21,10 @@ class ActivityScreen extends Component {
     render() {
         return (
             <SafeAreaView>
-               {/* <ActivityBox/> */}
-               <Text>No Activity to show</Text>
+                {/* <ActivityBox/> */}
+                <View style={styles.activityContainer}>
+                    <Text>No Activity to show</Text>
+                </View>
             </SafeAreaView>
         )
     }
