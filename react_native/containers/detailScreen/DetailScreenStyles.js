@@ -4,7 +4,8 @@ export default {
 
     detailContainer: {
         backgroundColor: $_.white,
-        height:'100%'
+        height:'100%',
+        // width: '100%'
     },
 
     subDiscriptionBox:{
@@ -22,7 +23,9 @@ export default {
     },
     subDiscriptionText:{
         flexWrap: 'wrap',
-        fontSize: $_.baseFontSize+4
+        fontSize: $_.baseFontSize+4,
+        // borderWidth: 1,
+        width: '80%',
     },
     headerSection:{
         backgroundColor: $_.primaryColor,

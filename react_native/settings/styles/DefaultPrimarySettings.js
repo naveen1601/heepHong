@@ -28,6 +28,8 @@ export default {
         _500: '#3B4A62',
         _600: '#21314D',
         _700: '#111C2D',
+        _800: '#999999',
+        _900: '#E5E5E5'
     },
     informationColors: {
         error: '#E02007',

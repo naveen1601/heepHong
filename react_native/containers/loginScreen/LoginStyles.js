@@ -34,7 +34,7 @@ export default {
         paddingTop:20
     },
     loginBox:{   
-        marginVertical:50,   
+        marginVertical:20,   
         // borderWidth:1 
     },
     loginButton:{
@@ -45,12 +45,7 @@ export default {
     },
 
     
-    dropDownContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        backgroundColor: '#ecf0f1',
-        padding: 8,
-    },
+
     loginModalBackground: {
         backgroundColor: $_.loginPageBackgroundColor,
         height: '100%'
@@ -63,7 +58,7 @@ export default {
     },
     logoImage:{
         width:'100%',
-        resizeMode: 'stretch',
+        resizeMode: 'contain',
         height: 110,
         left:-10
     }

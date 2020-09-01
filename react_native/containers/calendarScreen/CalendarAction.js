@@ -28,7 +28,7 @@ export default {
                 }
                 else {
                     dispatch({
-                        type: Constants.ACTIONS.GENERAL_ERROR,
+                        type: Constants.ACTIONS.GENERAL_LOGIN_ERROR,
                         message: errorResponse.error.message
                     });
                 }

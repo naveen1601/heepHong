@@ -3,6 +3,7 @@ export default {
       language: '语言',
       welcome: '你好!',
       description: '内容中文',
+      version: '版'
     },
     login:{
       userNamePlaceHolder: '帳號',
@@ -11,6 +12,11 @@ export default {
       forgetPassword: '忘記密碼',
       show: '表演',
       hide: '隐藏'
+    },
+    calendar:{
+      monthly: '月',
+      weekly: '週',
+      daily: '日'
     },
     navigator:{
       calendar : '日曆',

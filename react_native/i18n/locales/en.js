@@ -3,6 +3,7 @@ export default {
       language: 'Language',
       welcome: 'Hello!',
       description: 'Content by English',
+      version: 'Version'
     },
     login:{
       userNamePlaceHolder: 'User name',
@@ -11,7 +12,11 @@ export default {
       forgetPassword:'Forget Password',
       show: 'Show',
       hide: 'Hide'
-
+    },
+    calendar:{
+      monthly: 'Monthly',
+      weekly: 'Weekly',
+      daily: 'Daily'
     },
     navigator:{
       calendar : 'Calendar',

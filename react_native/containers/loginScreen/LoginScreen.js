@@ -11,7 +11,7 @@ import Button from '../../baseComponents/button/Button';
 import {
     View,
     Image,
-    ScrollView
+    ScrollView,
 } from 'react-native';
 import Text from '../../baseComponents/text/Text';
 import FlatButton from '../../baseComponents/button/FlatButton';
@@ -19,6 +19,7 @@ import { Screens } from '../../helpers/screenHelpers';
 import I18n from '../../i18n/locales';
 import _ from 'lodash';
 import LoginAction from './LoginAction';
+import Alert from '../../baseComponents/alert/Alert';
 class LoginScreen extends Component {
 
     state = {
@@ -46,6 +47,9 @@ class LoginScreen extends Component {
 
         return (
             <ScrollView keyboardShouldPersistTaps={'always'}>
+                {!!this.props.errorMessage && <Alert message={this.props.errorMessage}
+                        type="error" />
+                    }
                 <View style={styles.loginBox}>
                     <View style={userBoxStyle}>
                         <FontAwesome name={'user'}
@@ -138,7 +142,7 @@ let styles = create(LoginStyles);
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        prop: state.prop
+        errorMessage: state.login?.errorMessage
     }
 }
 

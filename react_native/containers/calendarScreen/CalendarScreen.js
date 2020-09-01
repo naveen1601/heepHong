@@ -21,7 +21,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import CalendarAction from './CalendarAction';
 import RNPickerSelect, { defaultStyles } from 'react-native-picker-select';
-import { Screens } from '../../helpers/screenHelpers';
+import { Screens, resetScreen } from '../../helpers/screenHelpers';
 import I18n from '../../i18n/locales';
 
 class CalendarScreen extends Component {
@@ -170,34 +170,41 @@ class CalendarScreen extends Component {
         )
     }
 
+    renderAlert =()=>{
+        alert(this.props.errorMessage);
+        resetScreen(this.props.navigation, Screens.LOGIN_SCREEN)
+    }
+
     render() {
+        this.props.errorMessage && this.renderAlert();
         const vwUri = `http://hhs-cam2.eastasia.cloudapp.azure.com/hhsmobile?token=${this.props.token}&LanguageCode=${I18n.t('api.language')}`;
         return (
-            <SafeAreaView style={{flex: 1 }}>
-            <View style={styles.calendarContainer}>
-                {this.renderHeader()}
+            <SafeAreaView style={{ flex: 1 }}>
+                {/* {this.props.errorMessage && this.renderAlert()} */}
+                <View style={styles.calendarContainer}>
+                    {this.renderHeader()}
 
-                <WebView
-                    source={{
-                        uri: vwUri,
-                    }}
-                    ref={this.webviewRef}
-                    javaScriptEnabled={true}
-                    domStorageEnabled={true}
-                    sharedCookiesEnabled={true}
-                    originWhitelist={["*"]}
-                    scalesPageToFit={true}
-                    startInLoadingState={true}
-                    mixedContentMode={"always"}
-                    allowsInlineMediaPlayback={true}
-                    allowsFullscreenVideo={true}
-                    allowsBackForwardNavigationGestures={true}
-                    allowsLinkPreview={false}
-                    renderLoading={this.LoadingIndicatorView}
-                    onMessage={this.onMessage}
-                    injectedJavaScript={this.runFirst()}
-                />
-                {/* <Button
+                    <WebView
+                        source={{
+                            uri: vwUri,
+                        }}
+                        ref={this.webviewRef}
+                        javaScriptEnabled={true}
+                        domStorageEnabled={true}
+                        sharedCookiesEnabled={true}
+                        originWhitelist={["*"]}
+                        scalesPageToFit={true}
+                        startInLoadingState={true}
+                        mixedContentMode={"always"}
+                        allowsInlineMediaPlayback={true}
+                        allowsFullscreenVideo={true}
+                        allowsBackForwardNavigationGestures={true}
+                        allowsLinkPreview={false}
+                        renderLoading={this.LoadingIndicatorView}
+                        onMessage={this.onMessage}
+                        injectedJavaScript={this.runFirst()}
+                    />
+                    {/* <Button
                     onPress={() => this.props.navigation.navigate(Screens.DETAIL_SCREEN)}
                     text="Move To Detail"
                     secondaryButton={true}
@@ -230,7 +237,8 @@ const mapStateToProps = (state) => {
         token: _.get(state, 'login.userData.Token'),
         cases: _.get(state, 'calendar.cases'),
         selectedCase: _.get(state, 'calendar.selectedCase'),
-        languageSelected: _.get(state, 'login.language')
+        languageSelected: _.get(state, 'login.language'),
+        errorMessage: _.get(state, 'calendar.errorMessage'),
     }
 }
 
