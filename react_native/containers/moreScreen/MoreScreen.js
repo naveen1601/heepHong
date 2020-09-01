@@ -89,7 +89,7 @@ class MoreScreen extends Component {
                                 placeholder={{}}
                                 items={languageList}
                                 onValueChange={value => this.handleLanguageChange(value)}
-                                useNativeAndroidPickerStyle={true}
+                                useNativeAndroidPickerStyle={false}
                                 InputAccessoryView={() => null}
                                 style={pickerSelectStyles}
                                 value={this.props.userLanguage}

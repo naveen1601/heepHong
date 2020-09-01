@@ -38,8 +38,8 @@ export default {
     },
     arrowIcon:{
         textAlign:'right',
-        top :5,
-        paddingRight:20,
+        top :3,
+        paddingRight:15,
 
         // android:{ paddingTop: 0 },
         // ios:{ paddingTop: 0 }
