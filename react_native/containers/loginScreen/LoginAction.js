@@ -5,7 +5,7 @@ import Constants from './LoginConstants';
 import { Screens, resetScreen } from '../../helpers/screenHelpers';
 
 export default {
-    doLogin: function (username, password, navigation) {
+    doLogin: function (username, password, showErrorFunction, navigation) {
         const userCredentials = {
             Email: username,
             Password: password
@@ -26,10 +26,12 @@ export default {
 
             let errorCallback = (errorResponse) => {
                 dispatch(SpinnerAction.hideSpinner());
-                dispatch({
-                    type: Constants.ACTIONS.UNAUTHORIZED_REQUEST,
-                    message: errorResponse.error.Message
-                });
+
+                showErrorFunction(errorResponse.error);
+                // dispatch({
+                //     type: Constants.ACTIONS.UNAUTHORIZED_REQUEST,
+                //     message: errorResponse.error.Message
+                // });
 
             };
 

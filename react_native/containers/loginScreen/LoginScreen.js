@@ -29,13 +29,31 @@ class LoginScreen extends Component {
         passwordHasError: ''
     };
 
+    showErrorFunction = (error) => {
+        if (error.Title == 'User not registered') {
+            this.setState({
+                userNameHasError: error.Message,
+
+            });
+        }
+        // else if(error.Title == 'User not registered'){
+
+        // }
+    }
+
     handleUserNameChange = (text) => {
-        this.setState({ userName: text });
+        this.setState({
+            userName: text,
+            userNameHasError: '',
+        });
         //this.updateLoginButtonState(text, this.state.password);
     }
 
     handlePasswordChange = (text) => {
-        this.setState({ password: text });
+        this.setState({
+            password: text,
+            passwordHasError: ''
+        });
         //this.updateLoginButtonState(this.state.userName, text);
     }
 
@@ -47,9 +65,6 @@ class LoginScreen extends Component {
 
         return (
             <ScrollView keyboardShouldPersistTaps={'always'}>
-                {!!this.props.errorMessage && <Alert message={this.props.errorMessage}
-                        type="error" />
-                    }
                 <View style={styles.loginBox}>
                     <View style={userBoxStyle}>
                         <FontAwesome name={'user'}
@@ -65,6 +80,9 @@ class LoginScreen extends Component {
                             autoCorrect={false}
                         />
                     </View>
+                    {!!this.state.userNameHasError && <Alert message={this.state.userNameHasError}
+                        type="error" />
+                    }
                     <View style={passwordBoxStyle}>
                         <Fontisto name={'locked'}
                             style={styles.iconStyle}
@@ -76,6 +94,9 @@ class LoginScreen extends Component {
                             value={this.state.password}
                             stacked />
                     </View>
+                    {!!this.state.passwordHasError && <Alert message={this.state.passwordHasError}
+                        type="error" />
+                    }
                     <View style={styles.forgetPassBox}>
                         <FlatButton
                             onPress={() => { }}
@@ -112,9 +133,7 @@ class LoginScreen extends Component {
 
     handleLoginButton = () => {
         if (this.areUserInputValid()) {
-            this.props.doLogin(this.state.userName, this.state.password, this.props.navigation);
-
-            //this.props.navigation.replace(Screens.TAB);
+            this.props.doLogin(this.state.userName, this.state.password, this.showErrorFunction);
         }
 
     }
@@ -122,7 +141,6 @@ class LoginScreen extends Component {
     render() {
         return (
             <>
-
                 <View style={styles.loginContainer}>
                     <Image
                         style={styles.logoImage}
@@ -148,8 +166,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        doLogin: (userName, password) => {
-            dispatch(LoginAction.doLogin(userName, password, ownProps.navigation));
+        doLogin: (userName, password, showErrorFunction) => {
+            dispatch(LoginAction.doLogin(userName, password, showErrorFunction, ownProps.navigation));
         },
     }
 }

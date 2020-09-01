@@ -6,9 +6,9 @@ import Text from '../../baseComponents/text/Text';
 import ButtonStyles from './ButtonStyles';
 
 const FlatButton = (props) => {
-    const handleOnPress =(text)=> {
+    const handleOnPress =(returnValue)=> {
         Keyboard.dismiss();
-        props.onPress(text);
+        props.onPress(returnValue);
     };
     const buttonStyle = [styles.flatButton];
     if (props.style) {
@@ -16,7 +16,7 @@ const FlatButton = (props) => {
     }
     return (
         <TouchableOpacity style={styles.flatButtonWrapper}
-            onPress={()=>handleOnPress(props.text)}
+            onPress={()=>handleOnPress(props.returnValue)}
             disabled={props.disabled}
             accessibilityTraits="button"
             accessibilityComponentType="button"
@@ -38,7 +38,8 @@ FlatButton.propTypes = {
     disabled: PropTypes.bool,
     onPress: PropTypes.func,
     testID: PropTypes.string,
-    text: PropTypes.string
+    text: PropTypes.string,
+    returnValue: PropTypes.string
 };
 
 export default FlatButton;

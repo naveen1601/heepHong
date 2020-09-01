@@ -10,7 +10,7 @@ import { create } from '../../helpers/PlatformSpecificStyles';
 import Text from '../../baseComponents/text/Text';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ActivityBox from '../../components/activityBox/ActivityBox';
-
+import Alert from '../../baseComponents/alert/Alert';
 class ActivityScreen extends Component {
     constructor(props) {
         super(props);
@@ -23,7 +23,9 @@ class ActivityScreen extends Component {
             <SafeAreaView>
                 {/* <ActivityBox/> */}
                 <View style={styles.activityContainer}>
-                    <Text>No Activity to show</Text>
+                        <Alert message={'No activity to show'}
+                            type="alertInfo" />
+
                 </View>
             </SafeAreaView>
         )

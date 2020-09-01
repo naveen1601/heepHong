@@ -38,12 +38,13 @@ export default {
     },
     arrowIcon:{
         textAlign:'right',
-        top :3,
-        paddingRight:15,
+        top :5,
+        paddingRight:20,
 
         // android:{ paddingTop: 0 },
         // ios:{ paddingTop: 0 }
     },
+
     bodySectionKey:{
         flexDirection: 'row',
         width:'50%',
@@ -96,5 +97,8 @@ export default {
     },
     bodyIconText:{
         fontSize: 16,
+    },
+    pickerStyle:{
+        paddingLeft: 70
     }
 }

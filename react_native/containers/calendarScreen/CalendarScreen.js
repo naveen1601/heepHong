@@ -28,15 +28,15 @@ class CalendarScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedOption: 'Monthly',
+            selectedOption: 'monthly',
             // key: 0
         };
-        this.calendarTypes = ['Monthly', 'Weekly', 'Daily']
+        this.calendarTypes = ['monthly', 'weekly', 'daily']
         this.webviewRef = createRef();
         this.eventCollection = {
-            'Monthly': 'SwithToMonth',
-            'Weekly': 'SwithToWeek',
-            'Daily': 'SwithToDay',
+            'monthly': 'SwithToMonth',
+            'weekly': 'SwithToWeek',
+            'daily': 'SwithToDay',
             'Today': 'SwithToToday',
             'CaseIdLoad': 'LoadCalendarByCaseId'
         }
@@ -103,11 +103,13 @@ class CalendarScreen extends Component {
         <View style={styles.buttonConatiner}>
             {this.calendarTypes.map((item) => {
                 const style = (item == this.state.selectedOption) ? styles.selectedButton : styles.unSelectedButton;
+                const buttonLabel = I18n.t(`calendar.${item}`)
                 return (
                     <FlatButton
                         onPress={this.handleCalendarOptionSelection}
-                        text={item}
+                        text={buttonLabel}
                         style={style}
+                        returnValue = {item}
                     />
                 )
             })}

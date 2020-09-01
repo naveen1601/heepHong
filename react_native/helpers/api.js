@@ -10,9 +10,7 @@ function getLocation(location) {
 
 function status(response) {
     if (response.status === 204) {
-        return Promise.resolve({
-            json: () => ({})
-        });
+        return Promise.resolve(null);
     }
     if (response.status >= 200 && response.status < 300) {
         return Promise.resolve(response.data);
@@ -35,8 +33,7 @@ let Api = {
 
         axios.get(url, {
             headers, 
-            withCredentials: true,
-            timeout: 1000,})
+            withCredentials: true})
             .then(status)
             .then(successCallback)
             .catch(res => errorCallback({

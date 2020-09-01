@@ -84,20 +84,22 @@ class MoreScreen extends Component {
                     </View>
                     <View style={styles.bodySectionValueConatiner}>
                         {/* <Text style={styles.bodySectionValue}>Chinese</Text> */}
-                        <RNPickerSelect
-                            placeholder={{}}
-                            items={languageList}
-                            onValueChange={value => this.handleLanguageChange(value)}
-                            useNativeAndroidPickerStyle={false}
-                            InputAccessoryView={() => null}
-                            style={pickerSelectStyles}
-                            value={this.props.userLanguage}
-                            Icon={() => {
-                                return <AntDesign name={'right'}
-                                    style={styles.arrowIcon}
-                                    size={13} />
-                            }}
-                        />
+                        <View style={styles.pickerStyle}>
+                            <RNPickerSelect
+                                placeholder={{}}
+                                items={languageList}
+                                onValueChange={value => this.handleLanguageChange(value)}
+                                useNativeAndroidPickerStyle={true}
+                                InputAccessoryView={() => null}
+                                style={pickerSelectStyles}
+                                value={this.props.userLanguage}
+                                Icon={() => {
+                                    return <AntDesign name={'right'}
+                                        style={styles.arrowIcon}
+                                        size={13} />
+                                }}
+                            />
+                        </View>
                     </View>
                 </View>
                 <View style={styles.VersionBodySection}>

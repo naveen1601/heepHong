@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {
     StyleSheet,
     ScrollView,
+    TouchableOpacity,
     View
 } from 'react-native';
 import DetailScreenStyles from './DetailScreenStyles';
@@ -12,42 +13,120 @@ import ActivityBox from '../../components/activityBox/ActivityBox';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import I18n from '../../i18n/locales';
+import 'moment/locale/zh-cn';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import DetailAction from './DetailAction';
 
 
-const DetailScreen = (props) => {
+class DetailScreen extends Component {
 
-    const itemDescription = (label, text) => (
-        <View style={styles.subDiscriptionBox}>
-            <Text style={styles.subDiscriptionLabel}>{label}</Text>
-            <Text style={styles.subDiscriptionText}>{text}</Text>
-        </View>
-    )
-    const appointment = props.appointment;
+    state = {
+        isPreviousAvailable: true,
+        isNextAvailable: true
+    }
 
-    const startTime = appointment.StartDate && moment(appointment.StartDate)
-    const endTime = appointment.EndDate && moment(appointment.EndDate)
-    const duration = appointment.EndDate && appointment.StartDate && moment.duration(endTime.diff(startTime));
-    return (
-        <ScrollView style={styles.detailContainer}>
-            {appointment &&
-                <>
-                    <View style={styles.headerSection}>
-                        <Text style={styles.headerText}>{moment(appointment.StartDate).format('DD MMM YYYY, ddd')}</Text>
-                    </View>
-                    <View style={styles.descriptionSection}>
-                        {itemDescription('Class', appointment.Class)}
-                        {itemDescription('Staff', appointment.StaffName)}
-                        {itemDescription('Time', appointment.Time)}
-                        {itemDescription('Duration', `${parseInt(duration.asMinutes())} min`)}
-                        {itemDescription('Venue', appointment.Venue)}
-                        {itemDescription('Address', appointment.Address)}
-                        {itemDescription('Contact', appointment.Contact)}
-                        {itemDescription('Remark', appointment.Remarks)}
-                    </View>
-                </>
+    itemDescription = (label, text, isImp) => {
+        const discriptionTextStyle = [styles.subDiscriptionText];
+        isImp && discriptionTextStyle.push(styles.subDiscriptionTextImp)
+        return (
+            <View style={styles.subDiscriptionBox}>
+                <Text style={styles.subDiscriptionLabel}>{label}</Text>
+                <Text style={discriptionTextStyle}>{text}</Text>
+            </View>
+        )
+    }
+
+    showPrevButton = () => {
+        this.setState({
+            isPreviousAvailable: true
+        })
+    }
+
+    showNextButton = () => {
+        this.setState({
+            isNextAvailable: true
+        })
+    }
+
+    emptyPrevCall = () => {
+        this.setState({
+            isPreviousAvailable: false
+        })
+    }
+    emptyNextCall = () => {
+        this.setState({
+            isNextAvailable: false
+        })
+    }
+
+    handlePreviousAppointment = () => {
+        this.props.previousAppointment(this.props.token, this.props.selectedCaseId, this.props.appointment.Id, this.emptyPrevCall, this.showNextButton);
+    }
+    handleNextAppointment = () => {
+        this.props.nextAppointment(this.props.token, this.props.selectedCaseId, this.props.appointment.Id, this.emptyNextCall, this.showPrevButton)
+    }
+
+
+    render() {
+        const appointment = this.props.appointment;
+        let duration = 0
+        let endTime = ''
+        let startTime = ''
+        let headerDate = ''
+        if (appointment) {
+            startTime = appointment.StartDate && moment(appointment.StartDate)
+            endTime = appointment.EndDate && moment(appointment.EndDate)
+            duration = appointment.EndDate && appointment.StartDate && moment.duration(endTime.diff(startTime));
+            headerDate = '';
+            if (this.props.userLanguage == 'en') {
+                moment.locale('en')
+                headerDate = startTime.format('DD MMM YYYY, ddd')
             }
-        </ScrollView>
-    )
+            else {
+                moment.locale('zh-cn')
+                headerDate = startTime.format('MMM DD YYYY, ddd')
+            }
+        }
+        return (
+            <ScrollView style={styles.detailContainer}>
+
+
+                {appointment &&
+                    <View style={styles.detailView}>
+                        <View style={styles.headerSection}>
+                            <Text style={styles.headerText}>{headerDate}</Text>
+                        </View>
+                        <View style={styles.detailAndArrow}>
+                            {this.state.isPreviousAvailable &&
+                                <TouchableOpacity onPress={this.handlePreviousAppointment}>
+                                    <AntDesign name={'left'}
+                                        style={styles.arrowIcon}
+                                        size={16} />
+                                </TouchableOpacity>}
+                            <View style={styles.descriptionSection}>
+                                {this.itemDescription(I18n.t('detail.class'), appointment.Class)}
+                                {this.itemDescription(I18n.t('detail.staff'), appointment.StaffName)}
+                                {this.itemDescription(I18n.t('detail.time'), appointment.Time)}
+                                {this.itemDescription(I18n.t('detail.duration'), `${parseInt(duration.asMinutes())} ${I18n.t('detail.min')}`)}
+                                {this.itemDescription(I18n.t('detail.venue'), appointment.Venue)}
+                                {this.itemDescription(I18n.t('detail.address'), appointment.Address)}
+                                {this.itemDescription(I18n.t('detail.contact'), appointment.Contact)}
+                                {this.itemDescription(I18n.t('detail.remark'), appointment.Remarks, true)}
+                            </View>
+                            {this.state.isNextAvailable &&
+                                <TouchableOpacity onPress={this.handleNextAppointment}>
+                                    <AntDesign name={'right'}
+                                        style={styles.arrowIcon}
+                                        size={16} />
+                                </TouchableOpacity>}
+                        </View>
+                    </View>
+                }
+
+            </ScrollView >
+        )
+    }
 }
 
 
@@ -55,14 +134,24 @@ let styles = create(DetailScreenStyles);
 
 const mapStateToProps = (state) => {
     return {
-        appointment: _.get(state, 'calendar.selectedAppointment')
+        appointment: _.get(state, 'calendar.selectedAppointment'),
+        userLanguage: state.login?.language,
+        selectedCaseId: _.get(state, 'calendar.selectedCase'),
+        token: _.get(state, 'login.userData.Token'),
+
     }
 }
 
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        someAction: () => { }
+        previousAppointment: (token, caseId, appointmentId, emptyPrevCall, showNextButton) => {
+            dispatch(DetailAction.previousAppointment(token, caseId, appointmentId, emptyPrevCall, showNextButton))
+        },
+        nextAppointment: (token, caseId, appointmentId, emptyNextCall, showPrevButton) => {
+            dispatch(DetailAction.nextAppointment(token, caseId, appointmentId, emptyNextCall, showPrevButton))
+        }
+
     }
 }
 

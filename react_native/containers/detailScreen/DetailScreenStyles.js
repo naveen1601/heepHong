@@ -4,13 +4,13 @@ export default {
 
     detailContainer: {
         backgroundColor: $_.white,
-        height:'100%',
+        // height:'100%',
         // width: '100%'
     },
 
     subDiscriptionBox:{
         flexDirection: 'row',
-        paddingHorizontal:40,
+        paddingHorizontal:10,
         paddingVertical:10,
     },
 
@@ -25,7 +25,7 @@ export default {
         flexWrap: 'wrap',
         fontSize: $_.baseFontSize+4,
         // borderWidth: 1,
-        width: '80%',
+        width: '60%',
     },
     headerSection:{
         backgroundColor: $_.primaryColor,
@@ -37,7 +37,28 @@ export default {
         fontSize: $_.baseFontSize+4,
     },
     descriptionSection:{
-        marginTop: 40
+        marginTop: 40,
+        borderWidth:1,
+        // marginHorizontal:30,
+        borderColor: $_.grayColors._900,
+        paddingBottom: 30,
+        paddingTop: 10
+
+    },
+    subDiscriptionTextImp:{
+        color: $_.primaryColor
+    },
+    detailAndArrow: {
+        flex:1,
+        flexDirection: 'row',
+        justifyContent:'center',
+        alignItems: 'center',
+    },
+    arrowIcon:{
+        justifyContent:'center',
+        color: $_.grayColors._600,
+        padding: 10
     }
+    
 
 }

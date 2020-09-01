@@ -7,7 +7,6 @@ export default {
         backgroundColor: $primary.white,
         height:'100%'
     },
-
     ActivityIndicatorStyle: {
         // flex: 1,
         // justifyContent: 'space-evenly',
@@ -42,7 +41,6 @@ export default {
     caseContainer: {
         flexDirection: 'row',
         ios:{ paddingTop: 10 }
-
     },
     buttonConatiner: {
         flexDirection: 'row',

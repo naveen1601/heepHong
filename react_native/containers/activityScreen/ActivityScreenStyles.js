@@ -10,8 +10,10 @@ export default {
         backgroundColor: $_.white,
         height:'100%'
     },
-    safeArea:{
-        backgroundColor: 'blue'
+    activityText:{
+        alignItems: 'center',
+        justifyContent: 'center',
+        //
     }
 
 }

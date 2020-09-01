@@ -19,13 +19,13 @@ export default {
         }
     },
     alertInfoWrapper: {
-        backgroundColor: $primary.informationColors.infoLight,
-        borderLeftColor: $primary.informationColors.info,
+        backgroundColor: $primary.white,
+        borderLeftColor: $primary.primaryColor,
         borderLeftWidth: $primary.baseGridUnit,
         padding: $primary.baseGridUnit,
         marginHorizontal: 0,
         borderWidth: 1,
-        borderColor:$primary.informationColors.info
+        borderColor:$primary.primaryColor
     },
     alertSuccessWrapper: {
         backgroundColor: $primary.informationColors.successLight,
