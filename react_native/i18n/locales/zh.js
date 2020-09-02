@@ -1,6 +1,6 @@
 export default {
   hompage: {
-    language: '语言',
+    language: '語言',
     welcome: '你好!',
     description: '内容中文',
     version: '版'
@@ -29,7 +29,7 @@ export default {
     address: '地址',
     contact: '聯絡電話',
     remark: '備注',
-    min: '分钟'
+    min: '分鐘'
   },
   navigator: {
     calendar: '日曆',

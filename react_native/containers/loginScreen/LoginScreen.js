@@ -30,15 +30,17 @@ class LoginScreen extends Component {
     };
 
     showErrorFunction = (error) => {
-        if (error.Title == 'User not registered') {
+        if (error.Title == 'Invalid Email') {
             this.setState({
                 userNameHasError: error.Message,
 
             });
         }
-        // else if(error.Title == 'User not registered'){
-
-        // }
+        else if(error.Title == 'Invalid Password'){
+            this.setState({
+                passwordHasError: error.Message,
+            });
+        }
     }
 
     handleUserNameChange = (text) => {
