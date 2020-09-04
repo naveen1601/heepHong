@@ -81,11 +81,11 @@ class DetailScreen extends Component {
             headerDate = '';
             if (this.props.userLanguage == 'en') {
                 moment.locale('en')
-                headerDate = startTime.format('DD MMM YYYY, ddd')
+                headerDate = startTime.format('D MMM YYYY, ddd')
             }
             else {
                 moment.locale('zh-cn')
-                headerDate = startTime.format('MMM DD YYYY, ddd')
+                headerDate = startTime.format('D MMM YYYY, ddd')
             }
         }
         return (
