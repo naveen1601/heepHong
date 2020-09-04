@@ -251,7 +251,7 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
             dispatchProps.getCases(stateProps.token);
         },
         getAppointmentDetails: (appointmentId) => {
-            dispatchProps.getAppointmentDetails(appointmentId, stateProps.token);
+            dispatchProps.getAppointmentDetails(appointmentId, stateProps.selectedCase, stateProps.token);
         }
 
     });
@@ -268,8 +268,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             dispatch(CalendarAction.saveSelectedCase(selectedCase));
         },
 
-        getAppointmentDetails: (appointmentId, token) => {
-            dispatch(CalendarAction.getAppointmentDetails(appointmentId, token, ownProps.navigation));
+        getAppointmentDetails: (appointmentId, selectedCase, token) => {
+            dispatch(CalendarAction.getAppointmentDetails(appointmentId, selectedCase, token, ownProps.navigation));
         }
     }
 }

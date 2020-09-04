@@ -48,7 +48,7 @@ export default {
         }
     },
 
-    getAppointmentDetails: function(appointmentId, token, navigation){
+    getAppointmentDetails: function(appointmentId, selectedCase, token, navigation){
 
         return function (dispatch) {
 
@@ -79,7 +79,7 @@ export default {
 
             };
 
-            Api.doGet(locations.APPOINTMENT, {id: appointmentId}, loginSuccess, errorCallback, token);
+            Api.doGet(locations.APPOINTMENT, {AppointmentId: appointmentId, CaseId: selectedCase}, loginSuccess, errorCallback, token);
         }
 
     }
