@@ -6,6 +6,8 @@ import { PersistGate } from 'redux-persist/es/integration/react';
 // import SplashScreen from 'react-native-splash-screen';
 import HhsNavigator from './HhsApp/HhsNavigator';
 import LoginScreen from './containers/loginScreen/LoginScreen'
+import PushController from './HhsApp/PushController';
+import { View } from 'react-native';
 
 const persistor = getConfiguredPersistorStore();
 const store = getConfiguredStore();
@@ -21,14 +23,23 @@ const HhsApp = () => {
 
 
   return (
+    <>
     <Provider store={store}>
       <PersistGate
         persistor={persistor}>
         <HhsNavigator />
+        <PushController/>
         {/* <LoginScreen/> */}
       </PersistGate>
     </Provider>
+    
+    </>
   );
+  // return(
+  //   <View>
+  //     <PushController/>
+  //   </View>
+  // )
 };
 
 export default HhsApp;

@@ -54,7 +54,7 @@ class CalendarScreen extends Component {
     }
 
     onMessage = (event) => {
-        //alert(JSON.stringify(event.nativeEvent.data))
+        // alert(JSON.stringify(event.nativeEvent.data))
 
         if (event.nativeEvent.data != 'Loaded') {
             //alert(event.nativeEvent.data)

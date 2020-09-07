@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "279269378088",
+    "firebase_url": "https://hhscam2.firebaseio.com",
+    "project_id": "hhscam2",
+    "storage_bucket": "hhscam2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:279269378088:android:c197a2515859998ea3cd1d",
+        "android_client_info": {
+          "package_name": "com.hhs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "279269378088-tajnegi7jt2ok93fqet2s19cqlqp8ahp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlGRNaJ37OvRRIDUCam6D_noaWMcz7h-I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "279269378088-tajnegi7jt2ok93fqet2s19cqlqp8ahp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
