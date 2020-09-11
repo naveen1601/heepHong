@@ -5,7 +5,8 @@ let initialState = {
     language: 'zh',
     isLoggedIn: false,
     userData: {},
-    errorMessage: ''
+    errorMessage: '',
+    firebaseToken: ''
 };
 
 export default function LoginReducer(state = initialState, action) {
@@ -26,6 +27,9 @@ export default function LoginReducer(state = initialState, action) {
             newState.errorMessage = '';
             break;
 
+        case Constants.ACTIONS.SAVE_FIREBASE_TOKEN:
+            newState.firebaseToken= action.firebaseToken.token;
+            break;
         case Constants.ACTIONS.UNAUTHORIZED_REQUEST:
             newState.userData = {};
             newState.isLoggedIn = false;

@@ -8,6 +8,7 @@ import getStoredStateMigrateV4 from 'redux-persist/lib/integration/getStoredStat
 import login from './containers/loginScreen/LoginReducer';
 import spinner from './containers/spinner/SpinnerReducer';
 import calendar from './containers/calendarScreen/CalendarReducer';
+import activity from './containers/activityScreen/ActivityReducer';
 
 // import leadersBoard from './containers/leadersBoardScreen/LeadersBoardReducer'
 
@@ -26,7 +27,7 @@ function getStore() {
     };
 
     //let reducers = persistCombineReducers(config, { login, leadersBoard });
-    let reducers = persistCombineReducers(config, { login, spinner, calendar });
+    let reducers = persistCombineReducers(config, { login, spinner, calendar, activity });
     
     let store = createStore(
         reducers,

@@ -16,7 +16,9 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-export default class PushController extends Component {
+import LoginAction from "../containers/loginScreen/LoginAction";
+import { connect } from "react-redux";
+class PushController extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,6 +30,7 @@ export default class PushController extends Component {
     PushNotification.configure({
       // (optional) Called when Token is generated (iOS and Android)
       onRegister: function (token) {
+        self.props.updateFirebaseToken(token);
         console.log("TOKEN:", token);
       },
 
@@ -84,6 +87,21 @@ export default class PushController extends Component {
     return null;
   }
 }
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateFirebaseToken: (token) => {
+          dispatch(LoginAction.updateFirebaseToken(token));
+      },
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PushController);
 
 const styles = StyleSheet.create({
   scrollView: {

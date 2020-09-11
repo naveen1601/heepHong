@@ -5,7 +5,7 @@ import Constants from './LoginConstants';
 import { Screens, resetScreen } from '../../helpers/screenHelpers';
 
 export default {
-    doLogin: function (username, password, showErrorFunction, navigation) {
+    doLogin: function (username, password, firebaseToken, showErrorFunction, navigation) {
         const userCredentials = {
             Email: username,
             Password: password
@@ -35,9 +35,18 @@ export default {
 
             };
 
-            Api.doPost(Locations.LOGIN, userCredentials, loginSuccess, errorCallback);
+            Api.doPost(Locations.LOGIN, userCredentials, loginSuccess, errorCallback, "", firebaseToken);
         }
 
+    },
+
+    updateFirebaseToken: function (firebaseToken){
+        return function (dispatch) {
+            dispatch({
+                type: Constants.ACTIONS.SAVE_FIREBASE_TOKEN,
+                firebaseToken
+            });
+        }
     }
 
 }

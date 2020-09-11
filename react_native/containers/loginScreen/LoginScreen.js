@@ -135,7 +135,7 @@ class LoginScreen extends Component {
 
     handleLoginButton = () => {
         if (this.areUserInputValid()) {
-            this.props.doLogin(this.state.userName, this.state.password, this.showErrorFunction);
+            this.props.doLogin(this.state.userName, this.state.password, this.props.firebaseToken, this.showErrorFunction);
         }
 
     }
@@ -162,14 +162,15 @@ let styles = create(LoginStyles);
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        errorMessage: state.login?.errorMessage
+        errorMessage: state.login?.errorMessage,
+        firebaseToken: state.login?.firebaseToken
     }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        doLogin: (userName, password, showErrorFunction) => {
-            dispatch(LoginAction.doLogin(userName, password, showErrorFunction, ownProps.navigation));
+        doLogin: (userName, password, firebaseToken, showErrorFunction) => {
+            dispatch(LoginAction.doLogin(userName, password, firebaseToken, showErrorFunction, ownProps.navigation));
         },
     }
 }

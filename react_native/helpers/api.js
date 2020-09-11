@@ -19,6 +19,26 @@ function status(response) {
     }
 }
 
+function errorCall(res, errorCallback) {
+    if (res.response != undefined) {
+        errorCallback({
+            error: res.response.data.Message,
+            status: res.response.status,
+            statusText: res.response.putstatusText
+        })
+    }
+    else {
+        errorCallback({
+            error:{message: 'Facing some issue, please try after sometime'},
+            status: 408,
+            statusText: ''
+        })
+    }
+}
+
+const instance = axios.create();
+instance.defaults.timeout = 15000;
+
 let Api = {
     doGet(location, body, successCallback, errorCallback, token) {
 
@@ -31,18 +51,15 @@ let Api = {
             headers["UserToken"] = `${token}`;
         }
 
-        axios.get(url, {
+        instance.get(url, {
             headers, 
             withCredentials: true})
             .then(status)
             .then(successCallback)
-            .catch(res => errorCallback({
-                responseJson: res.response?.data,
-                status: res.response?.status,
-            }));
+            .catch(res => errorCall(res, errorCallback));
     },
 
-    doPost(location, body, successCallback, errorCallback, token) {
+    doPost(location, body, successCallback, errorCallback, token, firebaseToken) {
         let url = getLocation(location);
         let headers = {
             "Content-Type": "application/json",
@@ -51,15 +68,15 @@ let Api = {
         if (token) {
             headers["UserToken"] = `${token}`;
         }
-        axios.post(url, JSON.stringify(body),{
+        if(firebaseToken){
+            headers["DeviceInfo"] = `${firebaseToken}`;
+        }
+        instance.post(url, JSON.stringify(body),{
             headers,
             withCredentials: true
         }).then(status)
             .then(successCallback)
-            .catch(res => errorCallback({
-                error: res.response.data.Error,
-                status: res.response.status,
-            }));
+            .catch(res => errorCall(res, errorCallback));
     },
     
 }

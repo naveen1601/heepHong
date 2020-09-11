@@ -3,4 +3,5 @@ module.exports = {
     CASES: 'ParentsApi/GetParentsCases',
     APPOINTMENT: 'ParentsApi/GetAppointmentDetails',
     NEXTAPPOINTMENT: 'ParentsApi/GetCaseNextPrevAppointment',
+    GETNOTIFICATION: 'ParentsApi/ParentsNotificationHistoryGet'
 };
