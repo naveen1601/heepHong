@@ -20,6 +20,7 @@ import I18n from '../../i18n/locales';
 import _ from 'lodash';
 import LoginAction from './LoginAction';
 import Alert from '../../baseComponents/alert/Alert';
+
 class LoginScreen extends Component {
 
     state = {
@@ -36,7 +37,7 @@ class LoginScreen extends Component {
 
             });
         }
-        else if(error.Title == 'Invalid Password'){
+        else if (error.Title == 'Invalid Password') {
             this.setState({
                 passwordHasError: error.Message,
             });

@@ -28,7 +28,6 @@ class ActivityScreen extends Component {
 
     renderNotificationData =()=>{}
 
-
     render() {
         return (
             <SafeAreaView>

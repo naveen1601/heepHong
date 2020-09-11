@@ -24,6 +24,7 @@ import RNPickerSelect, { defaultStyles } from 'react-native-picker-select';
 import { Screens, resetScreen } from '../../helpers/screenHelpers';
 import I18n from '../../i18n/locales';
 
+
 class CalendarScreen extends Component {
     constructor(props) {
         super(props);
@@ -109,7 +110,7 @@ class CalendarScreen extends Component {
                         onPress={this.handleCalendarOptionSelection}
                         text={buttonLabel}
                         style={style}
-                        returnValue = {item}
+                        returnValue={item}
                     />
                 )
             })}
@@ -172,7 +173,7 @@ class CalendarScreen extends Component {
         )
     }
 
-    renderAlert =()=>{
+    renderAlert = () => {
         alert(this.props.errorMessage);
         resetScreen(this.props.navigation, Screens.LOGIN_SCREEN)
     }
