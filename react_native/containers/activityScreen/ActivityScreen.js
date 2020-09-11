@@ -20,52 +20,6 @@ class ActivityScreen extends Component {
         super(props);
         this.state = {};
 
-        this.some = 
-        [
-            {
-                "Date": "2020-09-11T20:09:47.21798Z",
-                "NotificationList": [
-                    {
-                        "ID": 1,
-                        "Parent_Email": "chan456@testing.com",
-                        "Case_ID": 4543,
-                        "Notification_Type": "Read",
-                        "IsRead": false,
-                        "Title": "OPRS schedule is ready",
-                        "Message": "8 2020 schedule is ready for Chan Tai Man. Please click “Read” button below for notifited.",
-                        "Created_By": "System",
-                        "Created_Date": "2020-09-11T20:09:47.21798Z"
-                    },
-                    {
-                        "ID": 2,
-                        "Parent_Email": "chan456@testing.com",
-                        "Case_ID": 4543,
-                        "Notification_Type": "Read",
-                        "IsRead": false,
-                        "Title": "OPRS schedule is ready",
-                        "Message": "8 2020 schedule is ready for Chan Tai Man. Please click “Read” button below for notifited.",
-                        "Created_By": "System",
-                        "Created_Date": "2020-09-11T20:09:53.2007696Z"
-                    }]
-
-            },
-
-            {
-
-                "Date": "2020-09-11T20:09:47.21798Z",
-                "NotificationList": [{
-                    "ID": 3,
-                    "Parent_Email": "chan456@testing.com",
-                    "Case_ID": 4543,
-                    "Notification_Type": "Read",
-                    "IsRead": false,
-                    "Title": "OPRS schedule is ready",
-                    "Message": "8 2020 schedule is ready for Chan Tai Man. Please click “Read” button below for notifited.",
-                    "Created_By": "System",
-                    "Created_Date": "2020-09-11T20:09:58.541745Z"
-                }]
-            }
-        ]
 
     }
 
@@ -73,7 +27,7 @@ class ActivityScreen extends Component {
         this.props.getNotifications(this.props.token);
     }
 
-    renderNotificationData()
+    renderNotificationData=()=>{}
 
 
     render() {
