@@ -35,13 +35,15 @@ export default {
     calendar: '日曆',
     activity: '活動',
     more: '更多',
-    detail: '詳情'
+    detail: '詳情',
+    activityDetail: 'Message Detail Chinese'
   },
   activity: {
     today: '今天',
     yesterday: '昨天',
+    message: '信息'
   },
   api: {
     language: 'zh-CN'
-  }
+  },
 }

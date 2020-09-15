@@ -138,9 +138,9 @@ class MoreScreen extends Component {
                         onPress={this.onChangeLanguage}
                         text="语言"
                         secondaryButton={true}
-                    />
-                    <Button
-                        onPress={this.onChangeEnglish}
+                    /> */}
+                    {/* <Button
+                        onPress={()=>this.props.navigation.navigate(Screens.ACTIVITY_AND_DETAIL, { screen: Screens.ACTIVITY_DETAIL_SCREEN })}
                         text="English"
                         secondaryButton={true}
                     /> */}

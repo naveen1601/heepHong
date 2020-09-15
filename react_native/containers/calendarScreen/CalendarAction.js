@@ -19,7 +19,7 @@ export default {
             };
 
             let errorCallback = (errorResponse) => {
-                dispatch(SpinnerAction.hideSpinner());
+                dispatch(SpinnerActions.hideSpinner());
                 if (errorResponse.status === 401) {
                     dispatch({
                         type: Constants.ACTIONS.CLEAR_DATA

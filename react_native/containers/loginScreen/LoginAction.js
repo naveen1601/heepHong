@@ -12,8 +12,8 @@ export default {
         }
 
         return function (dispatch) {
+            dispatch({type: Constants.ACTIONS.CLEAR_DATA});
             dispatch(SpinnerAction.showSpinner());
-
             let loginSuccess = (response) => {
                 dispatch(SpinnerAction.hideSpinner());
                 dispatch({
@@ -27,7 +27,7 @@ export default {
             let errorCallback = (errorResponse) => {
                 dispatch(SpinnerAction.hideSpinner());
 
-                showErrorFunction(errorResponse.error);
+                // showErrorFunction(errorResponse.error);
                 // dispatch({
                 //     type: Constants.ACTIONS.UNAUTHORIZED_REQUEST,
                 //     message: errorResponse.error.Message

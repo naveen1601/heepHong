@@ -23,7 +23,7 @@ import NativeToWeb from '../containers/NativeToWeb';
 import DetailScreen from '../containers/detailScreen/DetailScreen';
 import AppLevelSpinner from './AppLevelSpinner';
 import PrimarySettings from '../settings/styles/DefaultPrimarySettings';
-
+import ActivityDetailScreen from '../containers/activityDetailScreen/ActivityDetailScreen';
 // import Text from '../baseComponents/text/Text';
 
 
@@ -76,7 +76,7 @@ const Tabs = () => {
                 activeBackgroundColor: PrimarySettings.defaultHeaderAndBottomColor
 
             }}>
-            <BottomTabs.Screen name={'CALENDAR_AND_DETAIL'}
+            <BottomTabs.Screen name={Screens.CALENDAR_AND_DETAIL}
                 component={CalendarNestedStack}
                 options={({ navigation }) => {
                     return {
@@ -88,8 +88,8 @@ const Tabs = () => {
                     }
                 }}
             />
-            <BottomTabs.Screen name={Screens.ACTIVITY_SCREEN}
-                component={ActivityScreen}
+            <BottomTabs.Screen name={Screens.ACTIVITY_AND_DETAIL}
+                component={ActivityNestedStack}
                 options={({ navigation }) => {
                     return {
                         tabBarIcon: (navigation) => (
@@ -115,6 +115,29 @@ const Tabs = () => {
                 }
                 } />
         </BottomTabs.Navigator>
+    );
+}
+
+function ActivityNestedStack() {
+    return (
+        <Stack.Navigator mode='card' screenOptions={{
+            gestureEnabled: false,
+            headerBackTitleVisible: false
+        }}>
+            <Stack.Screen name={Screens.ACTIVITY_SCREEN}
+                component={ActivityScreen}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen name={Screens.ACTIVITY_DETAIL_SCREEN}
+                component={ActivityDetailScreen}
+                options={{
+                    headerTitle: I18n.t('navigator.activityDetail'),
+                    headerStyle: {
+                        backgroundColor: PrimarySettings.defaultHeaderAndBottomColor,
+                    },
+                }} />
+
+        </Stack.Navigator>
     );
 }
 
@@ -166,8 +189,8 @@ const HhsNavigator = (props) => {
                 barStyle="dark-content" translucent={true} />
             <SafeAreaProvider>
                 <NavigationContainer>
-                    <MyStack /> 
-                    {/* <Tabs /> */}
+                    {/* <MyStack />  */}
+                    <Tabs />
                 </NavigationContainer>
             </SafeAreaProvider>
             <AppLevelSpinner />

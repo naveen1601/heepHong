@@ -5,8 +5,6 @@ import {
     StyleSheet,
     ActivityIndicator,
     TouchableOpacity,
-    Keyboard,
-    ScrollView
 } from 'react-native';
 import CalendarScreenStyles from './CalendarScreenStyles';
 import { create } from '../../helpers/PlatformSpecificStyles';

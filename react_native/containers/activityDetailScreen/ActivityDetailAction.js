@@ -2,20 +2,20 @@ import { Screens, resetScreen } from '../../helpers/screenHelpers';
 import locations from '../../helpers/locations';
 import Api from '../../helpers/api';
 import SpinnerActions from '../spinner/SpinnerActions';
-import Constants from './ActivityConstants';
+import Constants from './ActivityDetailConstants';
 
 export default {
-    getNotifications: function (token, pageNo, navigation) {
+    getNotificationDetail: function (token, notificationID, navigation) {
 
         return function (dispatch) {
 
             dispatch(SpinnerActions.showSpinner());
 
-            let notificationSuccess = (response) => {
+            let notificationDetailSuccess = (response) => {
                 dispatch(SpinnerActions.hideSpinner());
                 dispatch({
-                    type: Constants.ACTIONS.SAVE_NOTIFICATION_DATA,
-                    activityData: response,
+                    type: Constants.ACTIONS.SAVE_NOTIFICATION_DETAIL,
+                    activityDetailData: response,
 
                 });
             };
@@ -26,18 +26,26 @@ export default {
                     dispatch({
                         type: Constants.ACTIONS.CLEAR_DATA
                     });
-                    resetScreen(navigation,Screens.LOGIN_SCREEN)
+                    resetScreen(navigation, Screens.LOGIN_SCREEN)
                 }
                 else {
                     dispatch({
-                        type: Constants.ACTIONS.GENERAL_NOTIFICATION_ERROR,
+                        type: Constants.ACTIONS.GENERAL_NOTIFICATION_DETAIL_ERROR,
                         message: errorResponse.error.message
                     });
                 }
 
             };
 
-            Api.doGet(locations.GETNOTIFICATION, {"PageNo": pageNo, "PageSize":2}, notificationSuccess, errorCallback, token);
+            Api.doGet(locations.GETNOTIFICATION_DETAIL, { "Id": notificationID }, notificationDetailSuccess, errorCallback, token);
         }
     },
+    updateFirebaseNotificationId: function (firebaseNotificationId) {
+        return function (dispatch) {
+            dispatch({
+                type:Constants.ACTIONS.UPDATE_FIREBASE_NOTIFICATION_ID,
+                firebaseNotificationId
+            })
+        }
+    }
 }

@@ -18,6 +18,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import LoginAction from "../containers/loginScreen/LoginAction";
 import { connect } from "react-redux";
+import ActivityDetailAction from "../containers/activityDetailScreen/ActivityDetailAction";
 class PushController extends Component {
   constructor(props) {
     super(props);
@@ -36,7 +37,7 @@ class PushController extends Component {
 
       // (required) Called when a remote or local notification is opened or received
       onNotification: function (notification) {
-        console.log("NOTIFICATION:", notification);
+        console.log("NOTIFICATION: ", notification);
 
         // process the notification
         self._addDataToList(notification);
@@ -98,6 +99,9 @@ const mapDispatchToProps = (dispatch) => {
     updateFirebaseToken: (token) => {
           dispatch(LoginAction.updateFirebaseToken(token));
       },
+    updateNotificationId: (notificationId) =>{
+        dispatch(ActivityDetailAction.updateFirebaseNotificationId(notificationId))
+    }
   }
 }
 

@@ -35,11 +35,13 @@ export default {
     calendar: 'Calendar',
     activity: 'Activity',
     more: 'More',
-    detail: 'Detail'
+    detail: 'Detail',
+    activityDetail: 'Message Detail'
   },
   activity: {
     today: 'Today',
     yesterday: 'Yesterday',
+    message: 'Message',
   },
   api: {
     language: 'en-US'

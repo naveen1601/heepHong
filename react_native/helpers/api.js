@@ -22,14 +22,14 @@ function status(response) {
 function errorCall(res, errorCallback) {
     if (res.response != undefined) {
         errorCallback({
-            error: res.response.data.Message,
+            error: res.response.data.Error,
             status: res.response.status,
             statusText: res.response.putstatusText
         })
     }
     else {
         errorCallback({
-            error:{message: 'Facing some issue, please try after sometime'},
+            error:{Message: 'Facing some issue, please try after sometime'},
             status: 408,
             statusText: ''
         })
@@ -37,7 +37,7 @@ function errorCall(res, errorCallback) {
 }
 
 const instance = axios.create();
-instance.defaults.timeout = 15000;
+instance.defaults.timeout = 30000;
 
 let Api = {
     doGet(location, body, successCallback, errorCallback, token) {
