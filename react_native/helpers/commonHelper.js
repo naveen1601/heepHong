@@ -1,10 +1,10 @@
 import moment from 'moment';
 
 export function checkTodayandYesterdayDate(givenDate) {
-    const comingDate = moment(givenDate.format('MM-DD-YYYY'));
+    const comingDate = moment(givenDate.format('YYYY-MM-DD'));
 
-    const isTodayDate = moment(moment().format('MM-DD-YYYY')).isSame(comingDate);
-    const yesterDate = moment(moment().add(-1, 'days').format('MM-DD-YYYY'));
+    const isTodayDate = moment(moment().format('YYYY-MM-DD')).isSame(comingDate);
+    const yesterDate = moment(moment().add(-1, 'days').format('YYYY-MM-DD'));
     const isYesterDate = yesterDate.isSame(comingDate);
 
     return {
