@@ -8,7 +8,6 @@ import { create } from '../../helpers/PlatformSpecificStyles';
 import Text from '../../baseComponents/text/Text';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { connect } from 'react-redux';
-import ActivityAction from './ActivityDetailAction';
 import _ from 'lodash';
 import moment from 'moment';
 import I18n from '../../i18n/locales';
@@ -22,8 +21,6 @@ class ActivityDetailScreen extends Component {
         this.state = {
         };
         this.notificationID = this.props.route.params?.notificationID
-
-
     }
 
     componentDidMount() {
@@ -65,7 +62,7 @@ class ActivityDetailScreen extends Component {
                 </View>
                 {!notificationDetail.IsRead && <Button
                     onPress={() => { }}
-                    text="Read"
+                    text={I18n.t('activity.read')}
                     secondaryButton={true}
                 />}
             </View>
@@ -76,11 +73,7 @@ class ActivityDetailScreen extends Component {
     render() {
         return (
             <SafeAreaView>
-                {/* <ActivityBox/> */}
                 <ScrollView>
-                    {/* <View style={styles.activityHeader}>
-                        <Text style={styles.activityHeaderText}>kkk</Text>
-                    </View> */}
                     {this.renderActivityDetail()}
                 </ScrollView>
             </SafeAreaView>

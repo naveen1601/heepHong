@@ -37,7 +37,7 @@ export default {
 
             };
 
-            Api.doGet(locations.GETNOTIFICATION, {"PageNo": pageNo, "PageSize":2}, notificationSuccess, errorCallback, token);
+            Api.doGet(locations.GETNOTIFICATION, {"PageNo": pageNo, "PageSize":6}, notificationSuccess, errorCallback, token);
         }
     },
 }

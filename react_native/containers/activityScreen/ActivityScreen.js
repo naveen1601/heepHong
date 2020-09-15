@@ -54,17 +54,15 @@ class ActivityScreen extends Component {
             moment.locale('zh-cn');
         }
 
-        const GroupData = _.groupBy(this.props.notificationList, 'groupDate')
-        console.log('grp ', GroupData);
+        const GroupData = _.groupBy(this.props.notificationList, 'groupDate');
         const NotificationLen = Object.keys(GroupData).length;
         let comp = [];
 
         for (let i = 0; i < NotificationLen; i++) {
 
             const notificationDate = moment(Object.keys(GroupData)[i]);
-            const {isTodayDate, isYesterDate} = checkTodayandYesterdayDate(notificationDate);
+            const { isTodayDate, isYesterDate } = checkTodayandYesterdayDate(notificationDate);
 
-            console.log('dates ', isTodayDate, ' yester ', isYesterDate);
             const headerText = isTodayDate ? I18n.t('activity.today') :
                 (isYesterDate ? I18n.t('activity.yesterday') : notificationDate.format('D MMM YYYY, ddd'))
 
@@ -90,7 +88,7 @@ class ActivityScreen extends Component {
 
                     return (
                         <TouchableOpacity
-                            onPress={()=>this.getNotificationDetails(item.ID)} key={item.ID}>
+                            onPress={() => this.getNotificationDetails(item.ID)} key={item.ID}>
                             <View style={styles.activityTime}>
                                 <IonIcons name={'md-time-outline'}
                                     style={{ color: '#7F7F7F', paddingRight: 5 }}
@@ -118,8 +116,9 @@ class ActivityScreen extends Component {
                         <Text style={styles.activityHeaderText}>{I18n.t('activity.message')}</Text>
                     </View>
                     <View >
-                        {/* <Alert message={'No activity to show'}
-                            type="alertInfo" /> */}
+                        {this.props.notificationList?.length < 1 &&
+                            <Alert message={I18n.t('activity.noActivity')}
+                                type="alertInfo" />}
                         {this.renderNotificationData()}
 
                         {this.props.totalPages >= this.props.nextPageCounter && !this.props.errorMessage &&

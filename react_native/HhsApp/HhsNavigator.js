@@ -201,7 +201,7 @@ const HhsNavigator = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        userLanguage: state.login && state.login.language
+        userLanguage: state.login?.language,
     }
 }
 

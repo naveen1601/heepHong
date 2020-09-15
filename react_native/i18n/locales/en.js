@@ -42,6 +42,8 @@ export default {
     today: 'Today',
     yesterday: 'Yesterday',
     message: 'Message',
+    read: 'Read',
+    noActivity: 'No activity to show'
   },
   api: {
     language: 'en-US'

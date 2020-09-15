@@ -20,7 +20,6 @@ class NativeToWeb extends Component {
 //   runFirst='Naveen,,,,';
  runFirst = ()=>{
     let stateName =  this.state.name;
-    console.log('sss ',stateName)
     return (`
       document.body.style.backgroundColor = 'green';
         window.postMessage('${this.state.name}', "*");

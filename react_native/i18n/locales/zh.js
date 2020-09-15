@@ -36,12 +36,14 @@ export default {
     activity: '活動',
     more: '更多',
     detail: '詳情',
-    activityDetail: 'Message Detail Chinese'
+    activityDetail: '訊息詳情'
   },
   activity: {
     today: '今天',
     yesterday: '昨天',
-    message: '信息'
+    message: '信息',
+    read: '讀',
+    noActivity: '沒有活動可顯示'
   },
   api: {
     language: 'zh-CN'

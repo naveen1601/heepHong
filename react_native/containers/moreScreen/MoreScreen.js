@@ -121,7 +121,6 @@ class MoreScreen extends Component {
     }
 
     render() {
-        console.log('lan ', this.props.userLanguage);
         I18n.locale = this.props.userLanguage;
         return (
             <SafeAreaView style={styles.moreContainer}>
@@ -176,7 +175,6 @@ const pickerSelectStyles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-    console.log(state);
     return {
         userLanguage: state.login?.language,
         userData: state.login?.userData

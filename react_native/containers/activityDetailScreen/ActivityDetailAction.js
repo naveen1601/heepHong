@@ -14,6 +14,9 @@ export default {
             let notificationDetailSuccess = (response) => {
                 dispatch(SpinnerActions.hideSpinner());
                 dispatch({
+                    type: Constants.ACTIONS.REMOVE_FIREBASE_NOTIFICATION_ID
+                })
+                dispatch({
                     type: Constants.ACTIONS.SAVE_NOTIFICATION_DETAIL,
                     activityDetailData: response,
 
