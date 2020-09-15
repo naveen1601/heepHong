@@ -13,7 +13,7 @@ export const Screens = {
 };
 
 export const resetScreen = (navigation, screenName) => {
-    navigation.reset({
+    navigation?.reset({
         index: 0,
         routes: [{ name: screenName }],
     });

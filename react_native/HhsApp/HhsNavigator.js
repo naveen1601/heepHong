@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 
 import {
     StatusBar,
@@ -24,6 +24,7 @@ import DetailScreen from '../containers/detailScreen/DetailScreen';
 import AppLevelSpinner from './AppLevelSpinner';
 import PrimarySettings from '../settings/styles/DefaultPrimarySettings';
 import ActivityDetailScreen from '../containers/activityDetailScreen/ActivityDetailScreen';
+import { navigationRef } from './RootNavigation';
 // import Text from '../baseComponents/text/Text';
 
 
@@ -181,14 +182,16 @@ function MyStack() {
         </Stack.Navigator>
     );
 }
+
 const HhsNavigator = (props) => {
     I18n.locale = props.userLanguage;
+
     return (
         <>
             <StatusBar
                 barStyle="dark-content" translucent={true} />
             <SafeAreaProvider>
-                <NavigationContainer>
+                <NavigationContainer ref={navigationRef}>
                     <MyStack /> 
                     {/* <Tabs /> */}
                 </NavigationContainer>

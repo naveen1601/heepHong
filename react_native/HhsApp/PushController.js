@@ -4,6 +4,9 @@ import PushNotification from "react-native-push-notification";
 import LoginAction from "../containers/loginScreen/LoginAction";
 import { connect } from "react-redux";
 import ActivityDetailAction from "../containers/activityDetailScreen/ActivityDetailAction";
+import * as RootNavigation from './RootNavigation.js';
+import { Screens } from "../helpers/screenHelpers";
+
 class PushController extends Component {
   constructor(props) {
     super(props);
@@ -25,6 +28,8 @@ class PushController extends Component {
         //console.log("NOTIFICATION: ", notification);
         self.props.updateNotificationId(notification?.NotificationID);
 
+        self.props.isLoggedIn &&
+          RootNavigation.reset(Screens.LOGIN_SCREEN);
         // process the notification
         // self._addDataToList(notification);
         // required on iOS only (see fetchCompletionHandler docs: https://github.com/react-native-community/react-native-push-notification-ios)
