@@ -74,19 +74,20 @@ class DetailScreen extends Component {
         let endTime = ''
         let startTime = ''
         let headerDate = ''
+        let meetingDate = ''
         if (appointment) {
-            startTime = appointment.StartDate && moment(appointment.StartDate)
-            endTime = appointment.EndDate && moment(appointment.EndDate)
-            duration = appointment.EndDate && appointment.StartDate && moment.duration(endTime.diff(startTime));
-            headerDate = '';
             if (this.props.userLanguage == 'en') {
                 moment.locale('en')
-                headerDate = startTime.format('D MMM YYYY, ddd')
             }
             else {
                 moment.locale('zh-cn')
-                headerDate = startTime.format('D MMM YYYY, ddd')
             }
+            const startDateTime = moment(appointment.StartDate);
+            headerDate = startDateTime.format('dddd');
+            meetingDate = startDateTime.format('D MMM YYYY')
+            startTime = startDateTime.format('hh:mm');
+            endTime = moment(appointment.EndDate).format('hh:mm');
+            // duration = appointment.EndDate && appointment.StartDate && moment.duration(endTime.diff(startTime));
         }
         return (
             <ScrollView style={styles.detailContainer}>
@@ -107,8 +108,9 @@ class DetailScreen extends Component {
                             <View style={styles.descriptionSection}>
                                 {this.itemDescription(I18n.t('detail.class'), appointment.Class)}
                                 {this.itemDescription(I18n.t('detail.staff'), appointment.StaffName)}
-                                {this.itemDescription(I18n.t('detail.time'), appointment.Time)}
-                                {this.itemDescription(I18n.t('detail.duration'), `${parseInt(duration.asMinutes())} ${I18n.t('detail.min')}`)}
+                                {this.itemDescription(I18n.t('detail.date'), meetingDate)}
+                                {this.itemDescription(I18n.t('detail.time'), `${startTime} - ${endTime}`)}
+                                {/* {this.itemDescription(I18n.t('detail.duration'), `${parseInt(duration.asMinutes())} ${I18n.t('detail.min')}`)} */}
                                 {this.itemDescription(I18n.t('detail.venue'), appointment.Venue)}
                                 {this.itemDescription(I18n.t('detail.address'), appointment.Address)}
                                 {this.itemDescription(I18n.t('detail.contact'), appointment.Contact)}

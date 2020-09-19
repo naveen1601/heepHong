@@ -29,7 +29,8 @@ export default {
     address: '地址',
     contact: '聯絡電話',
     remark: '備注',
-    min: '分鐘'
+    min: '分鐘',
+    date: '日期'
   },
   navigator: {
     calendar: '日曆',

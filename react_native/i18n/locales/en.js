@@ -29,7 +29,8 @@ export default {
     address: 'Address',
     contact: 'Contact',
     remark: 'Remark',
-    min: 'min'
+    min: 'min',
+    date: 'Date'
   },
   navigator: {
     calendar: 'Calendar',
