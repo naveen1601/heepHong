@@ -75,18 +75,22 @@ class DetailScreen extends Component {
         let startTime = ''
         let headerDate = ''
         let meetingDate = ''
+        const startDateTime = moment(appointment.StartDate);
         if (appointment) {
             if (this.props.userLanguage == 'en') {
                 moment.locale('en')
+                startTime = startDateTime.format('h:mm a');
+                endTime = moment(appointment.EndDate).format('h:mm a');
+                meetingDate = startDateTime.format('D MMM YYYY')
             }
             else {
                 moment.locale('zh-cn')
+                startTime = startDateTime.format('a h:mm');
+                endTime = moment(appointment.EndDate).format('a h:mm');
+                meetingDate = startDateTime.format('YYYY')+'年'+ startDateTime.format(' MMM Do')
             }
-            const startDateTime = moment(appointment.StartDate);
+            
             headerDate = startDateTime.format('dddd');
-            meetingDate = startDateTime.format('D MMM YYYY')
-            startTime = startDateTime.format('hh:mm');
-            endTime = moment(appointment.EndDate).format('hh:mm');
             // duration = appointment.EndDate && appointment.StartDate && moment.duration(endTime.diff(startTime));
         }
         return (

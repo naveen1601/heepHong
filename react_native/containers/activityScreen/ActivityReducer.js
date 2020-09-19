@@ -28,6 +28,13 @@ export default function ActivityReducer(state = initialState, action) {
             newState.nextPageCounter = state.nextPageCounter + 1;
             break;
 
+        case Constants.ACTIONS.UPDATE_READ_INFO:
+            newState.notificationList = state.notificationList.map(item =>{
+                item.ID == action.notificationID && (item.IsRead = true);
+                return item;
+            })
+            break;
+
         case Constants.ACTIONS.GENERAL_NOTIFICATION_ERROR:
             newState.errorMessage = action.message
             break;

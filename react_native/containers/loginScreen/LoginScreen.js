@@ -24,8 +24,8 @@ import Alert from '../../baseComponents/alert/Alert';
 class LoginScreen extends Component {
 
     state = {
-        userName: 'chan456@testing.com',
-        password: 'dd',
+        userName: '',
+        password: '',
         userNameHasError: '',
         passwordHasError: ''
     };

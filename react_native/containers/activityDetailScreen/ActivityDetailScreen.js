@@ -61,7 +61,7 @@ class ActivityDetailScreen extends Component {
                     <Text style={styles.activityBodyText}>{notificationDetail.Message}</Text>
                 </View>
                 {!notificationDetail.IsRead && <Button
-                    onPress={() => { }}
+                    onPress={()=>this.props.updateReadInfo(this.props.token, this.notificationID)}
                     text={I18n.t('activity.read')}
                     secondaryButton={true}
                 />}
@@ -94,6 +94,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         getNotificationDetail: (token, notificationID) => {
             dispatch(ActivityDetailAction.getNotificationDetail(token, notificationID, ownProps.navigation))
+        },
+        updateReadInfo:(token, notificationID) =>{
+            dispatch(ActivityDetailAction.updateReadInfo(token, notificationID, ownProps.navigation))
         }
     }
 }

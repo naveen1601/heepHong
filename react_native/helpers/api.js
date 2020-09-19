@@ -78,6 +78,25 @@ let Api = {
             .then(successCallback)
             .catch(res => errorCall(res, errorCallback));
     },
+
+    doPut(location, body, successCallback, errorCallback, token){
+
+         let url = getLocation(location) + ObjectHelper.getQueryString(body);
+         
+        let headers = {
+            "Content-Type": "application/json",
+            "UserLanguage": I18n.t('api.language')
+        };
+        if (token) {
+            headers["UserToken"] = `${token}`;
+        }
+        instance.put(url,{},{
+            headers,
+            withCredentials: true
+        }).then(status)
+            .then(successCallback)
+            .catch(res => errorCall(res, errorCallback));
+    }
     
 }
 export default Api;
