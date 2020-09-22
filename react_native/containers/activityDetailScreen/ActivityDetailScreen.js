@@ -60,7 +60,7 @@ class ActivityDetailScreen extends Component {
                     <Text style={styles.activityBodyText}>{notificationDetail.Title}</Text>
                     <Text style={styles.activityBodyText}>{notificationDetail.Message}</Text>
                 </View>
-                {!notificationDetail.IsRead && <Button
+                {notificationDetail.ShowReadButton && <Button
                     onPress={()=>this.props.updateReadInfo(this.props.token, this.notificationID)}
                     text={I18n.t('activity.read')}
                     secondaryButton={true}

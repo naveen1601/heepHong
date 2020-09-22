@@ -21,7 +21,7 @@ export default {
     daily: 'Daily'
   },
   detail: {
-    class: 'Class',
+    appointment: 'Appointment',
     staff: 'Staff',
     time: 'Time',
     duration: 'Duration',

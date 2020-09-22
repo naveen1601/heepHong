@@ -6,16 +6,13 @@ import { connect } from "react-redux";
 import ActivityDetailAction from "../containers/activityDetailScreen/ActivityDetailAction";
 import * as RootNavigation from './RootNavigation.js';
 import { Screens } from "../helpers/screenHelpers";
+import messaging from '@react-native-firebase/messaging';
 
 class PushController extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      pushData: []
-    }
-  }
+  
   componentDidMount() {
     let self = this;
+    self.requestUserPermission();
     PushNotification.configure({
       // (optional) Called when Token is generated (iOS and Android)
       onRegister: function (token) {
@@ -57,6 +54,17 @@ class PushController extends Component {
        */
       requestPermissions: true
     });
+  }
+
+  requestUserPermission = async () => {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+    if (enabled) {
+      console.log('Authorization status:', authStatus);
+    }
   }
 
   render() {

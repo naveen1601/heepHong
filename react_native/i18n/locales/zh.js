@@ -21,7 +21,7 @@ export default {
     daily: '日'
   },
   detail: {
-    class: '班',
+    appointment: '訓練',
     staff: '職員',
     time: '時間',
     duration: '時數',

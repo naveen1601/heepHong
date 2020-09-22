@@ -31,7 +31,7 @@ export default {
                 else {
                     dispatch({
                         type: Constants.ACTIONS.GENERAL_NOTIFICATION_ERROR,
-                        message: errorResponse.error.message
+                        message: errorResponse.error.Message
                     });
                 }
 

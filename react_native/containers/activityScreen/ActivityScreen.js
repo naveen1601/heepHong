@@ -116,6 +116,9 @@ class ActivityScreen extends Component {
                         <Text style={styles.activityHeaderText}>{I18n.t('activity.message')}</Text>
                     </View>
                     <View >
+                        {!!this.props.errorMessage &&
+                            <Alert message={this.props.errorMessage}
+                                type="error" />}
                         {this.props.notificationList?.length < 1 &&
                             <Alert message={I18n.t('activity.noActivity')}
                                 type="alertInfo" />}

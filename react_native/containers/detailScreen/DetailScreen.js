@@ -75,16 +75,18 @@ class DetailScreen extends Component {
         let startTime = ''
         let headerDate = ''
         let meetingDate = ''
-        const startDateTime = moment(appointment.StartDate);
+        let startDateTime = '';
         if (appointment) {
             if (this.props.userLanguage == 'en') {
-                moment.locale('en')
+                moment.locale('en');
+                startDateTime = moment(appointment.StartDate);
                 startTime = startDateTime.format('h:mm a');
                 endTime = moment(appointment.EndDate).format('h:mm a');
                 meetingDate = startDateTime.format('D MMM YYYY')
             }
             else {
-                moment.locale('zh-cn')
+                moment.locale('zh-cn');
+                startDateTime = moment(appointment.StartDate);
                 startTime = startDateTime.format('a h:mm');
                 endTime = moment(appointment.EndDate).format('a h:mm');
                 meetingDate = startDateTime.format('YYYY')+'年'+ startDateTime.format(' MMM Do')
@@ -110,7 +112,7 @@ class DetailScreen extends Component {
                                         size={16} />
                                 </TouchableOpacity>}
                             <View style={styles.descriptionSection}>
-                                {this.itemDescription(I18n.t('detail.class'), appointment.Class)}
+                                {this.itemDescription(I18n.t('detail.appointment'), appointment.AppointmentName)}
                                 {this.itemDescription(I18n.t('detail.staff'), appointment.StaffName)}
                                 {this.itemDescription(I18n.t('detail.date'), meetingDate)}
                                 {this.itemDescription(I18n.t('detail.time'), `${startTime} - ${endTime}`)}
