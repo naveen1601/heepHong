@@ -12,7 +12,11 @@ target 'HHS' do
 
   pod 'react-native-webview', :path => '../node_modules/react-native-webview'
 
-
+  # add the Firebase pod for Firebase Cloud Messaging
+  pod 'Firebase/Messaging'
+  # add pods for any other desired Firebase products
+  # https://firebase.google.com/docs/ios/setup#available-pods
+  
   target 'HHSTests' do
     inherit! :complete
     # Pods for testing
@@ -27,6 +31,7 @@ target 'HHS' do
     flipper_post_install(installer)
   end
 end
+
 
 target 'HHS-tvOS' do
   # Pods for HHS-tvOS

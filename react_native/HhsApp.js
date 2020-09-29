@@ -7,8 +7,8 @@ import { PersistGate } from 'redux-persist/es/integration/react';
 import HhsNavigator from './HhsApp/HhsNavigator';
 import LoginScreen from './containers/loginScreen/LoginScreen'
 import PushController from './HhsApp/PushController';
-import { View } from 'react-native';
-import { Platform } from 'react-native';
+// import { View } from 'react-native';
+// import { Platform } from 'react-native';
 const persistor = getConfiguredPersistorStore();
 const store = getConfiguredStore();
 
@@ -19,11 +19,6 @@ const HhsApp = () => {
   //   SplashScreen.hide();
   // }, []);
 
-  // var PushController;
-  // if (Platform.OS == 'android') {
-  //   PushController = require('./HhsApp/PushController');
-  // }
-
   console.disableYellowBox = true;  //this is for removing yellow warnings
 
 
@@ -33,8 +28,9 @@ const HhsApp = () => {
         <PersistGate
           persistor={persistor}>
           <HhsNavigator />
-          {Platform.OS == 'android' &&
-            <PushController />}
+          <PushController />
+          {/* {Platform.OS == 'android' &&
+            <PushController />} */}
           {/* <LoginScreen/> */}
         </PersistGate>
       </Provider>

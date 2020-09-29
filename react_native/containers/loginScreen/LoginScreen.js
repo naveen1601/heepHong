@@ -20,6 +20,7 @@ import I18n from '../../i18n/locales';
 import _ from 'lodash';
 import LoginAction from './LoginAction';
 import Alert from '../../baseComponents/alert/Alert';
+import CryptoJS from "react-native-crypto-js";
 
 class LoginScreen extends Component {
 
@@ -136,9 +137,18 @@ class LoginScreen extends Component {
 
     handleLoginButton = () => {
         if (this.areUserInputValid()) {
+            const encryptEmail = CryptoJS.AES.encrypt(this.state.userName, 'hhsencryptionkey0').toString();
+            // console.log('encrypted Email ',encryptEmail);
+
+            const encrypPassword = CryptoJS.AES.encrypt(this.state.password, 'hhsencryptionkey0').toString();
+
+            // let bytes  = CryptoJS.AES.decrypt(encryptEmail, 'hhsencryptionkey0');
+            // const decryptEmail = bytes.toString(CryptoJS.enc.Utf8);
+
+            // console.log('decrypted Email ',decryptEmail);
+
             this.props.doLogin(this.state.userName, this.state.password, this.props.firebaseToken, this.props.notificationId, this.showErrorFunction);
         }
-
     }
 
     render() {
