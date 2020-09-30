@@ -25,8 +25,8 @@ import CryptoJS from "react-native-crypto-js";
 class LoginScreen extends Component {
 
     state = {
-        userName: 'chan456@testing.com',
-        password: 'aaa',
+        userName: '',
+        password: '',
         userNameHasError: '',
         passwordHasError: '',
         commonError: ''
@@ -148,7 +148,7 @@ class LoginScreen extends Component {
 
     handleLoginButton = () => {
         if (this.areUserInputValid()) {
-            
+
             const encryptEmail = CryptoJS.AES.encrypt(this.state.userName, 'HH$EncM@Ap0K20_@!').toString();
             // console.log('encrypted Email ',encryptEmail);
 
