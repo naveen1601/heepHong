@@ -28,7 +28,8 @@ class LoginScreen extends Component {
         userName: 'chan456@testing.com',
         password: 'aaa',
         userNameHasError: '',
-        passwordHasError: ''
+        passwordHasError: '',
+        commonError: ''
     };
 
     showErrorFunction = (error) => {
@@ -43,12 +44,18 @@ class LoginScreen extends Component {
                 passwordHasError: error.Message,
             });
         }
+        else{
+            this.setState({
+                commonError: error.Message,
+            });
+        }
     }
 
     handleUserNameChange = (text) => {
         this.setState({
             userName: text,
             userNameHasError: '',
+            commonError: ''
         });
         //this.updateLoginButtonState(text, this.state.password);
     }
@@ -56,7 +63,8 @@ class LoginScreen extends Component {
     handlePasswordChange = (text) => {
         this.setState({
             password: text,
-            passwordHasError: ''
+            passwordHasError: '',
+            commonError: ''
         });
         //this.updateLoginButtonState(this.state.userName, text);
     }
@@ -114,6 +122,9 @@ class LoginScreen extends Component {
                             secondaryButton={true}
                             style={styles.buttonStyle}
                         />
+                        {!!this.state.commonError && <Alert message={this.state.commonError}
+                        type="error" />
+                    }
                     </View>
                 </View>
 
@@ -137,17 +148,18 @@ class LoginScreen extends Component {
 
     handleLoginButton = () => {
         if (this.areUserInputValid()) {
-            const encryptEmail = CryptoJS.AES.encrypt(this.state.userName, 'hhsencryptionkey0').toString();
+            
+            const encryptEmail = CryptoJS.AES.encrypt(this.state.userName, 'HH$EncM@Ap0K20_@!').toString();
             // console.log('encrypted Email ',encryptEmail);
 
-            const encrypPassword = CryptoJS.AES.encrypt(this.state.password, 'hhsencryptionkey0').toString();
+            const encrypPassword = CryptoJS.AES.encrypt(this.state.password, 'HH$EncM@Ap0K20_@!').toString();
 
             // let bytes  = CryptoJS.AES.decrypt(encryptEmail, 'hhsencryptionkey0');
             // const decryptEmail = bytes.toString(CryptoJS.enc.Utf8);
 
             // console.log('decrypted Email ',decryptEmail);
 
-            this.props.doLogin(this.state.userName, this.state.password, this.props.firebaseToken, this.props.notificationId, this.showErrorFunction);
+            this.props.doLogin(encryptEmail, encrypPassword, this.props.firebaseToken, this.props.notificationId, this.showErrorFunction);
         }
     }
 
