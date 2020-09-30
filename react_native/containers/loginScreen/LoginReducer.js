@@ -28,7 +28,7 @@ export default function LoginReducer(state = initialState, action) {
             break;
 
         case Constants.ACTIONS.SAVE_FIREBASE_TOKEN:
-            newState.firebaseToken= action.firebaseToken.token;
+            newState.firebaseToken= action.firebaseToken;
             break;
         case Constants.ACTIONS.UNAUTHORIZED_REQUEST:
             newState.userData = {};
