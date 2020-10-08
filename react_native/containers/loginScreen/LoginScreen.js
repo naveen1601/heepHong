@@ -109,12 +109,12 @@ class LoginScreen extends Component {
                     {!!this.state.passwordHasError && <Alert message={this.state.passwordHasError}
                         type="error" />
                     }
-                    <View style={styles.forgetPassBox}>
+                    {/* <View style={styles.forgetPassBox}>
                         <FlatButton
                             onPress={() => { }}
                             text={I18n.t('login.forgetPassword')}
                         />
-                    </View>
+                    </View> */}
                     <View style={styles.loginButton}>
                         <Button
                             onPress={this.handleLoginButton}
