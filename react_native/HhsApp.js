@@ -19,7 +19,7 @@ const HhsApp = () => {
   //   SplashScreen.hide();
   // }, []);
 
-  console.disableYellowBox = true;  //this is for removing yellow warnings
+  console.disableYellowBox = true;
 
 
   return (

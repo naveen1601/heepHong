@@ -5,5 +5,6 @@ module.exports = {
     NEXTAPPOINTMENT: 'ParentsApi/GetCaseNextPrevAppointment',
     GETNOTIFICATION: 'ParentsApi/ParentsNotificationHistoryGet',
     GETNOTIFICATION_DETAIL: 'ParentsApi/ParentsNotificationDetailGet',
-    UPDATE_READ_STATUS: 'ParentsApi/ReadStatusUpdate'
+    UPDATE_READ_STATUS: 'ParentsApi/ReadStatusUpdate',
+    VALIDATE_TOKEN: 'ParentsApi/ValidateToken'
 };

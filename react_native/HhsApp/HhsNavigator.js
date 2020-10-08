@@ -1,7 +1,8 @@
-import React, {useRef} from 'react';
+import React, { useEffect } from 'react';
 
 import {
     StatusBar,
+    AppState
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -12,19 +13,21 @@ import AntIcon from 'react-native-vector-icons/AntDesign';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import FeatherIcons from 'react-native-vector-icons/Feather';
 import LoginScreen from '../containers/loginScreen/LoginScreen'
-import { Screens, resetScreen } from '../helpers/screenHelpers';
-import Button from '../baseComponents/button/Button';
+import { Screens } from '../helpers/screenHelpers';
 import ActivityScreen from '../containers/activityScreen/ActivityScreen';
 import I18n from '../i18n/locales';
 import CalendarScreen from '../containers/calendarScreen/CalendarScreen';
 import MoreScreen from '../containers/moreScreen/MoreScreen';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import NativeToWeb from '../containers/NativeToWeb';
 import DetailScreen from '../containers/detailScreen/DetailScreen';
 import AppLevelSpinner from './AppLevelSpinner';
 import PrimarySettings from '../settings/styles/DefaultPrimarySettings';
 import ActivityDetailScreen from '../containers/activityDetailScreen/ActivityDetailScreen';
-import { navigationRef } from './RootNavigation';
+import { navigationRef, reset } from './RootNavigation';
+import Api from '../helpers/api';
+import ValidateAction from './ValidateAction';
+import _ from 'lodash';
+
 // import Text from '../baseComponents/text/Text';
 
 
@@ -184,6 +187,23 @@ function MyStack() {
 }
 
 const HhsNavigator = (props) => {
+
+    useEffect(() => {
+        AppState.addEventListener("change", _handleAppStateChange);
+
+        return () => {
+            AppState.removeEventListener("change", _handleAppStateChange);
+        };
+    }, []);
+
+    const _handleAppStateChange = (nextAppState) => {
+        if (nextAppState == "active") {
+            ValidateAction.validateToken(props.token, _errorCallback);
+        }
+    };
+
+    const _errorCallback = ()=>reset(Screens.LOGIN_SCREEN)
+
     I18n.locale = props.userLanguage;
 
     return (
@@ -205,6 +225,8 @@ const HhsNavigator = (props) => {
 const mapStateToProps = (state) => {
     return {
         userLanguage: state.login?.language,
+        token: _.get(state, 'login.userData.Token'),
+
     }
 }
 

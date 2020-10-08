@@ -33,12 +33,12 @@ export default {
 
             let errorCallback = (errorResponse) => {
                 dispatch(SpinnerAction.hideSpinner());
-                // if (errorResponse.status === 401) {
-                //     dispatch({
-                //         type: Constants.ACTIONS.CLEAR_DATA
-                //     });
-                //     resetScreen(navigation,Screens.LOGIN_SCREEN)
-                // }
+                if (errorResponse.status === 401) {
+                    dispatch({
+                        type: Constants.ACTIONS.CLEAR_DATA
+                    });
+                    resetScreen(navigation,Screens.LOGIN_SCREEN)
+                }
                 // else {
                 //     dispatch({
                 //         type: Constants.ACTIONS.GENERAL_LOGIN_ERROR,
@@ -79,12 +79,12 @@ export default {
 
             let errorCallback = (errorResponse) => {
                 dispatch(SpinnerActions.hideSpinner());
-                // if (errorResponse.status === 401) {
-                //     dispatch({
-                //         type: Constants.ACTIONS.CLEAR_DATA
-                //     });
-                //     resetScreen(navigation,Screens.LOGIN_SCREEN)
-                // }
+                if (errorResponse.status === 401) {
+                    dispatch({
+                        type: Constants.ACTIONS.CLEAR_DATA
+                    });
+                    resetScreen(navigation,Screens.LOGIN_SCREEN)
+                }
                 // else {
                 //     dispatch({
                 //         type: Constants.ACTIONS.GENERAL_ERROR,
