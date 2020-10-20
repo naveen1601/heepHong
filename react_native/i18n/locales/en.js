@@ -30,7 +30,8 @@ export default {
     contact: 'Contact',
     remark: 'Remark',
     min: 'min',
-    date: 'Date'
+    date: 'Date',
+    target: 'Target'
   },
   navigator: {
     calendar: 'Calendar',

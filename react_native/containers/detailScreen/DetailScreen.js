@@ -22,8 +22,8 @@ import DetailAction from './DetailAction';
 class DetailScreen extends Component {
 
     state = {
-        isPreviousAvailable: true,
-        isNextAvailable: true
+        isPreviousAvailable: this.props.appointment.HasPrev,
+        isNextAvailable: this.props.appointment.HasNext
     }
 
     itemDescription = (label, text, isImp) => {
@@ -37,34 +37,18 @@ class DetailScreen extends Component {
         )
     }
 
-    showPrevButton = () => {
-        this.setState({
-            isPreviousAvailable: true
-        })
-    }
-
-    showNextButton = () => {
-        this.setState({
-            isNextAvailable: true
-        })
-    }
-
-    emptyPrevCall = () => {
-        this.setState({
-            isPreviousAvailable: false
-        })
-    }
-    emptyNextCall = () => {
-        this.setState({
-            isNextAvailable: false
-        })
+    checkPrevAndNextButton=(HasPrev, HasNext)=>{
+           this.setState({
+            isPreviousAvailable: HasPrev,
+            isNextAvailable: HasNext
+        }) 
     }
 
     handlePreviousAppointment = () => {
-        this.props.previousAppointment(this.props.token, this.props.selectedCaseId, this.props.appointment.Id, this.emptyPrevCall, this.showNextButton);
+        this.props.previousAppointment(this.props.token, this.props.selectedCaseId, this.props.appointment.Id, this.checkPrevAndNextButton);
     }
     handleNextAppointment = () => {
-        this.props.nextAppointment(this.props.token, this.props.selectedCaseId, this.props.appointment.Id, this.emptyNextCall, this.showPrevButton)
+        this.props.nextAppointment(this.props.token, this.props.selectedCaseId, this.props.appointment.Id, this.checkPrevAndNextButton)
     }
 
 
@@ -109,24 +93,26 @@ class DetailScreen extends Component {
                                 <TouchableOpacity onPress={this.handlePreviousAppointment}>
                                     <AntDesign name={'left'}
                                         style={styles.arrowIcon}
-                                        size={16} />
+                                        size={18} />
                                 </TouchableOpacity>}
                             <View style={styles.descriptionSection}>
                                 {this.itemDescription(I18n.t('detail.appointment'), appointment.AppointmentName)}
                                 {this.itemDescription(I18n.t('detail.staff'), appointment.StaffName)}
                                 {this.itemDescription(I18n.t('detail.date'), meetingDate)}
                                 {this.itemDescription(I18n.t('detail.time'), `${startTime} - ${endTime}`)}
-                                {/* {this.itemDescription(I18n.t('detail.duration'), `${parseInt(duration.asMinutes())} ${I18n.t('detail.min')}`)} */}
                                 {this.itemDescription(I18n.t('detail.venue'), appointment.Venue)}
                                 {this.itemDescription(I18n.t('detail.address'), appointment.Address)}
                                 {this.itemDescription(I18n.t('detail.contact'), appointment.Contact)}
+                                {!!appointment.Target &&
+                                    this.itemDescription(I18n.t('detail.target'), appointment.Target)
+                                }
                                 {this.itemDescription(I18n.t('detail.remark'), appointment.Remarks, true)}
                             </View>
                             {this.state.isNextAvailable &&
                                 <TouchableOpacity onPress={this.handleNextAppointment}>
                                     <AntDesign name={'right'}
                                         style={styles.arrowIcon}
-                                        size={16} />
+                                        size={18} />
                                 </TouchableOpacity>}
                         </View>
                     </View>
@@ -153,11 +139,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        previousAppointment: (token, caseId, appointmentId, emptyPrevCall, showNextButton) => {
-            dispatch(DetailAction.previousAppointment(token, caseId, appointmentId, emptyPrevCall, showNextButton))
+        previousAppointment: (token, caseId, appointmentId, checkPrevAndNextButton) => {
+            dispatch(DetailAction.previousAppointment(token, caseId, appointmentId, checkPrevAndNextButton))
         },
-        nextAppointment: (token, caseId, appointmentId, emptyNextCall, showPrevButton) => {
-            dispatch(DetailAction.nextAppointment(token, caseId, appointmentId, emptyNextCall, showPrevButton))
+        nextAppointment: (token, caseId, appointmentId, checkPrevAndNextButton) => {
+            dispatch(DetailAction.nextAppointment(token, caseId, appointmentId, checkPrevAndNextButton))
         }
 
     }

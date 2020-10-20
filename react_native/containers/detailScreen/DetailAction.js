@@ -6,7 +6,7 @@ import Constants from '../calendarScreen/CalendarConstants';
 
 export default {
 
-    previousAppointment: function (token, caseId, appointmentId, emptyPrevCall, showNextButton) {
+    previousAppointment: function (token, caseId, appointmentId, checkPrevAndNextButton) {
         const bodyParam = {
             AppointmentId: appointmentId,
             CaseId: caseId,
@@ -20,14 +20,11 @@ export default {
             let loginSuccess = (response) => {
                 dispatch(SpinnerActions.hideSpinner());
                 if (response) {
-                    showNextButton();
+                    checkPrevAndNextButton(response.HasPrev, response.HasNext);
                     dispatch({
                         type: Constants.ACTIONS.SAVE_APPOINTMENT,
                         selectedAppointment: response
                     });
-                }
-                else {
-                    emptyPrevCall();
                 }
             };
 
@@ -51,7 +48,7 @@ export default {
             Api.doGet(locations.NEXTAPPOINTMENT, bodyParam, loginSuccess, errorCallback, token);
         }
     },
-    nextAppointment: function (token, caseId, appointmentId, emptyNextCall, showPrevButton) {
+    nextAppointment: function (token, caseId, appointmentId, checkPrevAndNextButton) {
         const bodyParam = {
             AppointmentId: appointmentId,
             CaseId: caseId,
@@ -65,14 +62,11 @@ export default {
             let loginSuccess = (response) => {
                 dispatch(SpinnerActions.hideSpinner());
                 if (response) {
-                    showPrevButton();
+                    checkPrevAndNextButton(response.HasPrev, response.HasNext);
                     dispatch({
                         type: Constants.ACTIONS.SAVE_APPOINTMENT,
                         selectedAppointment: response
                     });
-                }
-                else {
-                    emptyNextCall();
                 }
                 //navigation.navigate(Screens.DETAIL_SCREEN)
             };

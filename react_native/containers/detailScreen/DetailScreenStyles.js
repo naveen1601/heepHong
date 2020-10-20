@@ -15,7 +15,7 @@ export default {
     },
 
     subDiscriptionLabel:{
-        width: 90,
+        width: 110,
         paddingRight: 10,
         flexWrap: 'wrap',
         fontSize: $_.baseFontSize+4,
@@ -57,7 +57,7 @@ export default {
     arrowIcon:{
         justifyContent:'center',
         color: $_.grayColors._600,
-        padding: 10
+        padding: 5
     }
     
 
