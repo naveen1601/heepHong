@@ -10,7 +10,7 @@ export default {
     passwordPlaceHolder: '密碼',
     loginButtonText: '登入',
     forgetPassword: '忘記密碼',
-    show: '表演',
+    show: '顯示',
     hide: '隐藏',
     nameError: '電郵錯誤',
     passwordError: '密碼錯誤'
