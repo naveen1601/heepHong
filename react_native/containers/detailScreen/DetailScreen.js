@@ -60,6 +60,7 @@ class DetailScreen extends Component {
         let headerDate = ''
         let meetingDate = ''
         let startDateTime = '';
+        let remark = '';
         if (appointment) {
             if (this.props.userLanguage == 'en') {
                 moment.locale('en');
@@ -78,6 +79,7 @@ class DetailScreen extends Component {
             
             headerDate = startDateTime.format('dddd');
             // duration = appointment.EndDate && appointment.StartDate && moment.duration(endTime.diff(startTime));
+            remark = appointment.Target ? appointment.Target+' '+appointment.Remarks : appointment.Remarks;
         }
         return (
             <ScrollView style={styles.detailContainer}>
@@ -103,10 +105,7 @@ class DetailScreen extends Component {
                                 {this.itemDescription(I18n.t('detail.venue'), appointment.Venue)}
                                 {this.itemDescription(I18n.t('detail.address'), appointment.Address)}
                                 {this.itemDescription(I18n.t('detail.contact'), appointment.Contact)}
-                                {!!appointment.Target &&
-                                    this.itemDescription(I18n.t('detail.target'), appointment.Target)
-                                }
-                                {this.itemDescription(I18n.t('detail.remark'), appointment.Remarks, true)}
+                                {this.itemDescription(I18n.t('detail.remark'), remark, true)}
                             </View>
                             {this.state.isNextAvailable &&
                                 <TouchableOpacity onPress={this.handleNextAppointment}>
