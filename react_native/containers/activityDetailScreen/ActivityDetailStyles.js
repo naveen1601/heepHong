@@ -15,7 +15,7 @@ export default {
     },
     headerSection:{
         backgroundColor: '#c9c9c9',
-        padding:10
+        padding:10        
     },
     headerText:{
         color: $_.black,
@@ -26,9 +26,10 @@ export default {
         paddingVertical:25,
         borderBottomColor: $_.grayColors._900,
         borderBottomWidth: 2,
-        alignItems: 'center'
+        alignItems: 'flex-start'
+        
     },
-    activityBodyText:{
+    activityBodyText:{       
         paddingVertical:25,
         fontSize: $_.baseFontSize+4,
         justifyContent: 'space-around',

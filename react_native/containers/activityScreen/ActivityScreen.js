@@ -46,12 +46,14 @@ class ActivityScreen extends Component {
     }
 
     renderNotificationData = () => {
-
+        let IsEnglish = false;
         if (this.props.userLanguage == 'en') {
             moment.locale('en');
+            IsEnglish  = true;
         }
         else {
             moment.locale('zh-cn');
+            IsEnglish  = false;
         }
 
         const GroupData = _.groupBy(this.props.notificationList, 'groupDate');
@@ -85,19 +87,20 @@ class ActivityScreen extends Component {
                 {notifications.map(item => {
                     const unReadStyle = [styles.unreadNotificationArea];
                     !item.IsRead && unReadStyle.push([styles.unreadNotification])
+                    let Title =  item.Title.replace(`\\n`,'\n');
 
                     return (
-                        <TouchableOpacity
+                        <TouchableOpacity style={{backgroundColor:'white'}}
                             onPress={() => this.getNotificationDetails(item.ID)} key={item.ID}>
                             <View style={styles.activityTime}>
                                 <IonIcons name={'md-time-outline'}
                                     style={{ color: '#7F7F7F', paddingRight: 5 }}
                                     size={17} />
-                                <Text style={styles.activityTimeText}>{moment(item.Created_Date).format('hh:mm')}</Text>
+                                <Text style={styles.activityTimeText}>{moment(item.Created_Date).format('HH:mm')}</Text>
                             </View>
                             <View style={styles.activityBody}>
                                 <View style={unReadStyle}></View>
-                                <Text style={styles.activityBodyText}>{item.Title}</Text>
+                                <Text style={styles.activityBodyText}>{Title}</Text>
                             </View>
                         </TouchableOpacity>
                     )
