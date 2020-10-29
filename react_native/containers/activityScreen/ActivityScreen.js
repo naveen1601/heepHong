@@ -49,11 +49,11 @@ class ActivityScreen extends Component {
         let IsEnglish = false;
         if (this.props.userLanguage == 'en') {
             moment.locale('en');
-            IsEnglish  = true;
+            IsEnglish = true;
         }
         else {
             moment.locale('zh-cn');
-            IsEnglish  = false;
+            IsEnglish = false;
         }
 
         const GroupData = _.groupBy(this.props.notificationList, 'groupDate');
@@ -65,8 +65,11 @@ class ActivityScreen extends Component {
             const notificationDate = moment(Object.keys(GroupData)[i]);
             const { isTodayDate, isYesterDate } = checkTodayandYesterdayDate(notificationDate);
 
+            const chineseDateFormat = notificationDate.format('YYYY') + '年 ' + notificationDate.format('MM') + '月 ' + notificationDate.format('D') + '日'
+
             const headerText = isTodayDate ? I18n.t('activity.today') :
-                (isYesterDate ? I18n.t('activity.yesterday') : notificationDate.format('D MMM YYYY, ddd'))
+                (isYesterDate ? I18n.t('activity.yesterday') :
+                    this.props.userLanguage == 'en' ? notificationDate.format('D MMM YYYY, ddd') : chineseDateFormat)
 
             const headerStyle = [styles.headerSection];
             const headerTextStyle = [styles.headerText]
@@ -87,10 +90,10 @@ class ActivityScreen extends Component {
                 {notifications.map(item => {
                     const unReadStyle = [styles.unreadNotificationArea];
                     !item.IsRead && unReadStyle.push([styles.unreadNotification])
-                    let Title =  item.Title.replace(`\\n`,'\n');
+                    let Title = item.Title.replace(`\\n`, '\n');
 
                     return (
-                        <TouchableOpacity style={{backgroundColor:'white'}}
+                        <TouchableOpacity style={{ backgroundColor: 'white' }}
                             onPress={() => this.getNotificationDetails(item.ID)} key={item.ID}>
                             <View style={styles.activityTime}>
                                 <IonIcons name={'md-time-outline'}

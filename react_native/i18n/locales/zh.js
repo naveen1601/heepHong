@@ -44,7 +44,7 @@ export default {
     today: '今天',
     yesterday: '昨天',
     message: '信息',
-    read: '讀',
+    read: '已閱讀',
     noActivity: '沒有活動可顯示'
   },
   api: {
