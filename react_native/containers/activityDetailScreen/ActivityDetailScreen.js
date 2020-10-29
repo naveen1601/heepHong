@@ -36,7 +36,6 @@ class ActivityDetailScreen extends Component {
             moment.locale('zh-cn');
         }
         const notificationDetail = this.props.notificationDetail;
-
         const notificationDate = moment(notificationDetail.Created_Date);
         const { isTodayDate, isYesterDate } = checkTodayandYesterdayDate(notificationDate);
         const headerText = isTodayDate ? I18n.t('activity.today') :
@@ -57,10 +56,10 @@ class ActivityDetailScreen extends Component {
             <View>
                 {dateText}
                 <View style={styles.activityBody}>
-                    <Text style={styles.activityBodyText}>{notificationDetail.Title}</Text>
-                    <Text style={styles.activityBodyText}>{notificationDetail.Message}</Text>
+                    <Text style={styles.activityBodyText}>{(notificationDetail.Title||"").replace('\\n','\n')}</Text>
+                    <Text style={styles.activityBodyText}>{(notificationDetail.Message||"").replace('\\n','\n')}</Text>
                 </View>
-                {notificationDetail.ShowReadButton && <Button
+                {!notificationDetail.IsRead && <Button
                     onPress={()=>this.props.updateReadInfo(this.props.token, this.notificationID)}
                     text={I18n.t('activity.read')}
                     secondaryButton={true}
