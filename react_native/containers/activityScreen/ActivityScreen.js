@@ -23,6 +23,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import { checkTodayandYesterdayDate } from '../../helpers/commonHelper';
 import { Screens } from '../../helpers/screenHelpers';
+import ActivityConstants from './ActivityConstants';
 
 class ActivityScreen extends Component {
     constructor(props) {
@@ -32,7 +33,10 @@ class ActivityScreen extends Component {
     }
 
     componentDidMount() {
-        this.props.getNotifications(this.props.token, this.props.nextPageCounter);
+        this.focusListener = this.props.navigation.addListener('focus', () => {
+            this.props.clearNotifications();
+            this.props.getNotifications(this.props.token, 1);
+        });
     }
 
     nextNotification = () => {
@@ -165,6 +169,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         getNotifications: (token, nextPageCounter) => {
             dispatch(ActivityAction.getNotifications(token, nextPageCounter, ownProps.navigation))
+        },
+        clearNotifications: () => {
+            dispatch(
+                {
+                    type: ActivityConstants.ACTIONS.CLEAR_ACTIVITY
+                })
         }
     }
 }
