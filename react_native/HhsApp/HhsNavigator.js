@@ -18,15 +18,13 @@ import ActivityScreen from '../containers/activityScreen/ActivityScreen';
 import I18n from '../i18n/locales';
 import CalendarScreen from '../containers/calendarScreen/CalendarScreen';
 import MoreScreen from '../containers/moreScreen/MoreScreen';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 import DetailScreen from '../containers/detailScreen/DetailScreen';
 import AppLevelSpinner from './AppLevelSpinner';
 import PrimarySettings from '../settings/styles/DefaultPrimarySettings';
 import ActivityDetailScreen from '../containers/activityDetailScreen/ActivityDetailScreen';
 import { navigationRef, reset } from './RootNavigation';
-import Api from '../helpers/api';
-import ValidateAction from './ValidateAction';
 import _ from 'lodash';
+import HhsAppStartProcess from './HhsAppStartProcess';
 
 // import Text from '../baseComponents/text/Text';
 
@@ -188,34 +186,17 @@ function MyStack() {
 
 const HhsNavigator = (props) => {
 
-    useEffect(() => {
-        AppState.addEventListener("change", _handleAppStateChange);
-
-        return () => {
-            AppState.removeEventListener("change", _handleAppStateChange);
-        };
-    }, []);
-
-    const _handleAppStateChange = (nextAppState) => {
-        if (nextAppState == "active") {
-            ValidateAction.validateToken(props.token, _errorCallback);
-        }
-    };
-
-    const _errorCallback = ()=>reset(Screens.LOGIN_SCREEN)
-
     I18n.locale = props.userLanguage;
 
     return (
         <>
             <StatusBar
                 barStyle="dark-content" translucent={true} />
-            <SafeAreaProvider>
+                <HhsAppStartProcess/>
                 <NavigationContainer ref={navigationRef}>
                     <MyStack /> 
                     {/* <Tabs /> */}
                 </NavigationContainer>
-            </SafeAreaProvider>
             <AppLevelSpinner />
 
         </>
@@ -225,8 +206,6 @@ const HhsNavigator = (props) => {
 const mapStateToProps = (state) => {
     return {
         userLanguage: state.login?.language,
-        token: _.get(state, 'login.userData.Token'),
-
     }
 }
 

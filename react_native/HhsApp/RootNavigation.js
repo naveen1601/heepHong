@@ -12,3 +12,7 @@ export function reset(screenName){
         routes: [{ name: screenName }],
     });
 }
+
+export function getNavigation(){
+  return navigationRef.current;
+}

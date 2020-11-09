@@ -3,7 +3,7 @@ import locations from "../helpers/locations";
 
 export default {
 
-    validateToken: function (token, errorCall) {
+    validateToken: function (userData, errorCall) {
 
         let successCallback = () => { 
             // console.log('success')
@@ -14,6 +14,7 @@ export default {
                 errorCall();
             }
         };
+        let token = userData.Token;
         !!token &&
             Api.doGet(locations.VALIDATE_TOKEN, {}, successCallback, errorCallback, token);
 
