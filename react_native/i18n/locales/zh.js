@@ -43,7 +43,7 @@ export default {
   activity: {
     today: '今天',
     yesterday: '昨天',
-    message: '信息',
+    message: '訊息',
     read: '已閱讀',
     noActivity: '沒有活動可顯示'
   },
