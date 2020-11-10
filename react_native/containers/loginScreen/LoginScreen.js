@@ -25,8 +25,8 @@ import CryptoJS from "react-native-crypto-js";
 class LoginScreen extends Component {
 
     state = {
-        userName: 'chan456@testing.com',
-        password: 'aa',
+        userName: '',
+        password: '',
         userNameHasError: '',
         passwordHasError: '',
         commonError: ''

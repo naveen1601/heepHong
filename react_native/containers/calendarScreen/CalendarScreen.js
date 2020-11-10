@@ -152,6 +152,7 @@ class CalendarScreen extends Component {
                         InputAccessoryView={() => null}
                         style={pickerSelectStyles}
                         value={this.props.selectedCase}
+                        fixAndroidTouchableBug={true}
                         Icon={() => {
                             return <AntDesign name={'down'}
                                 style={styles.arrowIcon}

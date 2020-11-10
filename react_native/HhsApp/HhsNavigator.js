@@ -25,6 +25,7 @@ import ActivityDetailScreen from '../containers/activityDetailScreen/ActivityDet
 import { navigationRef, reset } from './RootNavigation';
 import _ from 'lodash';
 import HhsAppStartProcess from './HhsAppStartProcess';
+import { Component } from 'react';
 
 // import Text from '../baseComponents/text/Text';
 
@@ -184,23 +185,34 @@ function MyStack() {
     );
 }
 
-const HhsNavigator = (props) => {
+class HhsNavigator extends Component {
 
-    I18n.locale = props.userLanguage;
+    state ={
+        currentPage: '',
+    }
 
-    return (
-        <>
-            <StatusBar
-                barStyle="dark-content" translucent={true} />
-                <HhsAppStartProcess/>
-                <NavigationContainer ref={navigationRef}>
-                    <MyStack /> 
+    changePageName =(name)=> this.setState({
+        currentPage: name
+    });
+    
+    render() {
+        I18n.locale = this.props.userLanguage;
+        return (
+            <>
+                <StatusBar
+                    barStyle="dark-content" translucent={true} />
+                <HhsAppStartProcess pageName={this.state.currentPage}/>
+                <NavigationContainer
+                    onStateChange={() => this.changePageName(navigationRef.current.getCurrentRoute().name)}
+                    ref={navigationRef}>
+                    <MyStack />
                     {/* <Tabs /> */}
                 </NavigationContainer>
-            <AppLevelSpinner />
+                <AppLevelSpinner />
 
-        </>
-    );
+            </>
+        );
+    }
 }
 
 const mapStateToProps = (state) => {

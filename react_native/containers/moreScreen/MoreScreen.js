@@ -93,6 +93,7 @@ class MoreScreen extends Component {
                                 InputAccessoryView={() => null}
                                 style={pickerSelectStyles}
                                 value={this.props.userLanguage}
+                                fixAndroidTouchableBug={true}
                                 Icon={() => {
                                     return <AntDesign name={'right'}
                                         style={styles.arrowIcon}

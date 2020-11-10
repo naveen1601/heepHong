@@ -22,19 +22,17 @@ const HhsAppStartProcess = (props) => {
         };
     }, []);
 
+    const userToken = props.userToken;
+
     const _errorCallback = () => reset(Screens.LOGIN_SCREEN)
 
     const _handleAppStateChange = (nextAppState) => {
         if (nextAppState == "active") {
-            ValidateAction.validateToken(props.userData, _errorCallback);
+            ValidateAction.validateToken(userToken, _errorCallback);
         }
     };
 
-    const navigationInstance = getNavigation();
-    const pageName = navigationInstance?.getCurrentRoute()?.name;
-
-
-    const comp = (pageName != Screens.LOGIN_SCREEN) ? (<View />) : (<SafeAreaView style={styles.logoContainer}>
+    const comp = (props.pageName == Screens.LOGIN_SCREEN || props.pageName == '') ? (<View />) : (<SafeAreaView style={styles.logoContainer}>
         <Image
             style={styles.logoImage}
             source={require('../staticData/assests/Hhs_Logo.png')}
@@ -46,6 +44,7 @@ const HhsAppStartProcess = (props) => {
 const mapStateToProps = (state) => {
     return {
         userData: state.login?.userData,
+        userToken: state.login?.validateToken
     }
 }
 
