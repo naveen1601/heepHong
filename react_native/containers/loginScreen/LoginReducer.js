@@ -1,6 +1,5 @@
 import Constants from './LoginConstants';
 import { REHYDRATE } from 'redux-persist';
-import CryptoJS from "react-native-crypto-js";
 
 let initialState = {
     language: 'zh',
@@ -8,7 +7,6 @@ let initialState = {
     userData: {},
     errorMessage: '',
     firebaseToken: '',
-    validateToken: ''
 };
 
 export default function LoginReducer(state = initialState, action) {
@@ -25,7 +23,6 @@ export default function LoginReducer(state = initialState, action) {
 
         case Constants.ACTIONS.SAVE_USER_DATA:
             newState.userData = action.userData;
-            newState.validateToken = action.userData?.Token && CryptoJS.AES.encrypt(action.userData.Token, 'HH$EncM@Ap0K20_@!').toString();
             newState.isLoggedIn = true;
             newState.errorMessage = '';
             break;
@@ -37,14 +34,12 @@ export default function LoginReducer(state = initialState, action) {
             newState.userData = {};
             newState.isLoggedIn = false;
             newState.errorMessage = action.message;
-            newState.validateToken = '';
             break;
 
         case Constants.ACTIONS.CLEAR_DATA:
             newState.userData = {};
             newState.isLoggedIn = false;
             newState.errorMessage = '';
-            newState.validateToken = '';
             break;
 
         default:

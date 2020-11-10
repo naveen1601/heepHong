@@ -6,7 +6,7 @@ import {
     View, Text
 } from 'react-native';
 import { Screens } from '../helpers/screenHelpers';
-import { reset, getNavigation } from './RootNavigation';
+import { reset } from './RootNavigation';
 import ValidateAction from './ValidateAction';
 import { connect } from 'react-redux';
 import { create } from '../helpers/PlatformSpecificStyles';
@@ -15,6 +15,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 const HhsAppStartProcess = (props) => {
 
+    const tokenRef = React.useRef(props.userToken);
+    tokenRef.current = props.userToken;
+
     useEffect(() => {
         AppState.addEventListener("change", _handleAppStateChange);
         return () => {
@@ -22,13 +25,11 @@ const HhsAppStartProcess = (props) => {
         };
     }, []);
 
-    const userToken = props.userToken;
-
     const _errorCallback = () => reset(Screens.LOGIN_SCREEN)
 
     const _handleAppStateChange = (nextAppState) => {
         if (nextAppState == "active") {
-            ValidateAction.validateToken(userToken, _errorCallback);
+            ValidateAction.validateToken(tokenRef.current, _errorCallback);
         }
     };
 
@@ -43,8 +44,7 @@ const HhsAppStartProcess = (props) => {
 }
 const mapStateToProps = (state) => {
     return {
-        userData: state.login?.userData,
-        userToken: state.login?.validateToken
+        userToken: state.login?.userData?.Token
     }
 }
 
