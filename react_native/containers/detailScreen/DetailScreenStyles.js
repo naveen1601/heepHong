@@ -57,7 +57,7 @@ export default {
     arrowIcon:{
         justifyContent:'center',
         color: $_.grayColors._600,
-        padding: 5
+        // padding: 5
     }
     
 
