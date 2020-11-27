@@ -1,3 +1,3 @@
 module.exports = {
-    baseApi: "http://hhs-cam2.eastasia.cloudapp.azure.com/hhsapi/api/"
+    baseApi: "https://camsapi.heephong.org/hhsapi/api/"
 };

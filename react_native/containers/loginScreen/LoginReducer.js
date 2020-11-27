@@ -6,7 +6,7 @@ let initialState = {
     isLoggedIn: false,
     userData: {},
     errorMessage: '',
-    firebaseToken: '',
+    firebaseToken: ''
 };
 
 export default function LoginReducer(state = initialState, action) {

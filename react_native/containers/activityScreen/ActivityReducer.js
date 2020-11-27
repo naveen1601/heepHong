@@ -19,9 +19,9 @@ export default function ActivityReducer(state = initialState, action) {
 
         case Constants.ACTIONS.SAVE_NOTIFICATION_DATA:
 
-            action.activityData.NotificationList.forEach(item => {
-                item.groupDate = moment(item.Created_Date).format('YYYY-MM-DD')
-            })
+            // action.activityData.NotificationList.forEach(item => {
+            //     item.groupDate = moment(item.Created_Date).format('YYYY-MM-DD')
+            // })
             newState.errorMessage = '';
             newState.notificationList = [...state.notificationList, ...action.activityData.NotificationList];
             newState.totalPages = action.activityData.TotalPages;
