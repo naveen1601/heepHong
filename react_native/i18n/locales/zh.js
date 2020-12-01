@@ -21,14 +21,14 @@ export default {
     daily: '日'
   },
   detail: {
-    appointment: '訓練',
-    staff: '職員',
+    appointment: '預約名稱',
+    staff: ' 同工',
     time: '時間',
     duration: '時數',
     venue: '地點',
     address: '地址',
     contact: '聯絡電話',
-    remark: '備注',
+    remark: '備註',
     min: '分鐘',
     date: '日期',
     target: '目标'

@@ -51,8 +51,8 @@ class MoreScreen extends Component {
                     source={require('../../staticData/assests/head_icon.png')}
                 />
                 <View style={styles.nameSection}>
-                    <Text style={styles.headerNameText}>{name}</Text>
-                    <Text style={styles.headerEmailText}>{email}</Text>
+                    <Text style={styles.headerNameText}>{email}</Text>
+                    {/* <Text style={styles.headerEmailText}>{email}</Text> */}
                 </View>
             </View>
         );
