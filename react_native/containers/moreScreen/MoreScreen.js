@@ -130,20 +130,9 @@ class MoreScreen extends Component {
                     {this.renderLanguageAndVersion()}
                     <TouchableOpacity onPress={this.props.logout}>
                         <View style={styles.logoutSection}>
-                            <Text style={styles.logoutText}>Log Out</Text>
+                            <Text style={styles.logoutText}>{I18n.t('hompage.logout')}</Text>
                         </View>
                     </TouchableOpacity>
-                    {/* <Text>{I18n.t('hompage.language')}</Text> */}
-                    {/* <Button
-                        onPress={this.onChangeLanguage}
-                        text="语言"
-                        secondaryButton={true}
-                    /> */}
-                    {/* <Button
-                        onPress={()=>this.props.navigation.navigate(Screens.ACTIVITY_AND_DETAIL, { screen: Screens.ACTIVITY_DETAIL_SCREEN })}
-                        text="English"
-                        secondaryButton={true}
-                    /> */}
                 </ScrollView>
             </SafeAreaView >
 

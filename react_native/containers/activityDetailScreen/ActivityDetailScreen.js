@@ -39,7 +39,7 @@ class ActivityDetailScreen extends Component {
         const notificationDate = moment(notificationDetail.Created_Date);
         const { isTodayDate, isYesterDate } = checkTodayandYesterdayDate(notificationDate);
         const headerText = isTodayDate ? I18n.t('activity.today') :
-            (isYesterDate ? I18n.t('activity.yesterday') : notificationDate.format('D MMM YYYY, ddd'))
+            (isYesterDate ? I18n.t('activity.yesterday') : notificationDate.format('dddd'))
 
         const headerStyle = [styles.headerSection];
         const headerTextStyle = [styles.headerText]

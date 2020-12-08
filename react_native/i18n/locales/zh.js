@@ -3,7 +3,8 @@ export default {
     language: '語言',
     welcome: '你好!',
     description: '内容中文',
-    version: '版'
+    version: '版',
+    logout: '登出'
   },
   login: {
     userNamePlaceHolder: '帳號',

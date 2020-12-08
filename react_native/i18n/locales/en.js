@@ -3,7 +3,8 @@ export default {
     language: 'Language',
     welcome: 'Hello!',
     description: 'Content by English',
-    version: 'Version'
+    version: 'Version',
+    logout: 'Log Out'
   },
   login: {
     userNamePlaceHolder: 'User name',
