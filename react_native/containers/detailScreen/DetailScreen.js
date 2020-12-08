@@ -95,7 +95,7 @@ class DetailScreen extends Component {
                                 <TouchableOpacity onPress={this.handlePreviousAppointment}>
                                     <AntDesign name={'left'}
                                         style={styles.arrowIcon}
-                                        size={20} />
+                                        size={18} />
                                 </TouchableOpacity>}
                             <View style={styles.descriptionSection}>
                                 {this.itemDescription(I18n.t('detail.appointment'), appointment.AppointmentName)}
@@ -111,7 +111,7 @@ class DetailScreen extends Component {
                                 <TouchableOpacity onPress={this.handleNextAppointment}>
                                     <AntDesign name={'right'}
                                         style={styles.arrowIcon}
-                                        size={20} />
+                                        size={18} />
                                 </TouchableOpacity>}
                         </View>
                     </View>

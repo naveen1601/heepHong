@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:279269378088:android:c197a2515859998ea3cd1d",
         "android_client_info": {
-          "package_name": "com.hhs"
+          "package_name": "org.heephong.cams"
         }
       },
       "oauth_client": [

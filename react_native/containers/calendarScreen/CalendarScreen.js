@@ -179,7 +179,7 @@ class CalendarScreen extends Component {
 
     render() {
         this.props.errorMessage && this.renderAlert();
-        const vwUri = `http://hhs-cam2.eastasia.cloudapp.azure.com/hhsmobile?token=${this.props.token}&LanguageCode=${I18n.t('api.language')}`;
+        const vwUri = `https://camsapi.heephong.org/hhsmobile?token=${this.props.token}&LanguageCode=${I18n.t('api.language')}`;
         return (
             <SafeAreaView style={{ flex: 1 }}>
                 {/* {this.props.errorMessage && this.renderAlert()} */}
