@@ -38,8 +38,11 @@ class ActivityDetailScreen extends Component {
         const notificationDetail = this.props.notificationDetail;
         const notificationDate = moment(notificationDetail.Created_Date);
         const { isTodayDate, isYesterDate } = checkTodayandYesterdayDate(notificationDate);
+        const chineseDateFormat = notificationDate.format('YYYY') + '年 ' + notificationDate.format('MM') + '月 ' + notificationDate.format('D') + '日';
+
         const headerText = isTodayDate ? I18n.t('activity.today') :
-            (isYesterDate ? I18n.t('activity.yesterday') : notificationDate.format('dddd'))
+            (isYesterDate ? I18n.t('activity.yesterday') : 
+            this.props.userLanguage == 'en' ? notificationDate.format('D MMM YYYY, ddd') : chineseDateFormat)
 
         const headerStyle = [styles.headerSection];
         const headerTextStyle = [styles.headerText]
