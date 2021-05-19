@@ -10,6 +10,7 @@ import { create } from '../../helpers/PlatformSpecificStyles';
 import MoreStyles from './MoreStyles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import RNPickerSelect from 'react-native-picker-select';
+import MoreAction from './MoreAction';
 
 
 class MoreScreen extends Component {
@@ -38,7 +39,7 @@ class MoreScreen extends Component {
     }
 
     handleLogout = () => {
-        this.props.logout();
+        this.props.logout(this.props.userData?.Token);
     }
 
     renderNameAndEmail = () => {
@@ -51,8 +52,8 @@ class MoreScreen extends Component {
                     source={require('../../staticData/assests/head_icon.png')}
                 />
                 <View style={styles.nameSection}>
-                    <Text style={styles.headerNameText}>{email}</Text>
-                    {/* <Text style={styles.headerEmailText}>{email}</Text> */}
+                    <Text style={styles.headerNameText}>{name}</Text>
+                    <Text style={styles.headerEmailText}>{email}</Text>
                 </View>
             </View>
         );
@@ -130,7 +131,7 @@ class MoreScreen extends Component {
                     {this.renderLanguageAndVersion()}
                     <TouchableOpacity onPress={this.props.logout}>
                         <View style={styles.logoutSection}>
-                            <Text style={styles.logoutText}>{I18n.t('hompage.logout')}</Text>
+                            <Text style={styles.logoutText}>Log Out</Text>
                         </View>
                     </TouchableOpacity>
                 </ScrollView>
@@ -168,7 +169,6 @@ const mapStateToProps = (state) => {
     return {
         userLanguage: state.login?.language,
         userData: state.login?.userData
-
     }
 }
 
@@ -180,11 +180,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
                 language: selectedLanguage
             })
         },
-        logout: () => {
-            dispatch({
-                type: 'CLEAR_DATA'
-            });
-            resetScreen(ownProps.navigation, Screens.LOGIN_SCREEN);
+        logout: (token) => {
+            dispatch(MoreAction.doLogout(ownProps.navigation, token));
         }
     }
 }

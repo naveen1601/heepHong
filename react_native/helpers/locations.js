@@ -1,5 +1,6 @@
 module.exports = {
     LOGIN: 'ParentsApi/LogInByParents',
+    LOGOUT: 'ParentsApi/LogoutByParents',
     CASES: 'ParentsApi/GetParentsCases',
     APPOINTMENT: 'ParentsApi/GetAppointmentDetails',
     NEXTAPPOINTMENT: 'ParentsApi/GetCaseNextPrevAppointment',

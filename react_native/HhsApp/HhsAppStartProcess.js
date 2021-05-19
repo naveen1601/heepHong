@@ -25,7 +25,14 @@ const HhsAppStartProcess = (props) => {
         };
     }, []);
 
-    const _errorCallback = () => reset(Screens.LOGIN_SCREEN)
+    const _errorCallback = (errorResponse) => {
+        if (errorResponse?.status === 401) {
+            dispatch({
+                type: constants.ACTIONS.CLEAR_DATA
+            });
+            reset(Screens.LOGIN_SCREEN);
+        }
+    }
 
     const _handleAppStateChange = (nextAppState) => {
         if (nextAppState == "active") {
