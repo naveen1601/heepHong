@@ -129,7 +129,7 @@ class MoreScreen extends Component {
                 <ScrollView>
                     {this.renderNameAndEmail()}
                     {this.renderLanguageAndVersion()}
-                    <TouchableOpacity onPress={this.props.logout}>
+                    <TouchableOpacity onPress={this.handleLogout}>
                         <View style={styles.logoutSection}>
                             <Text style={styles.logoutText}>Log Out</Text>
                         </View>
