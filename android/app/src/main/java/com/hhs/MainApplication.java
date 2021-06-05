@@ -2,6 +2,8 @@ package com.hhs;
 
 import android.app.Application;
 import android.content.Context;
+
+import com.blogreactnativesslpinning.SSLPinnerFactory;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
@@ -14,6 +16,7 @@ import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import androidx.multidex.MultiDexApplication;
+import com.facebook.react.modules.network.OkHttpClientProvider;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -47,6 +50,9 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public void onCreate() {
     super.onCreate();
+    // Provide a client factory to React Native's OkHttpClientProvider and it will
+    // use it instead of the default one.
+    OkHttpClientProvider.setOkHttpClientFactory(new SSLPinnerFactory());
     SoLoader.init(this, /* native exopackage */ false);
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
   }

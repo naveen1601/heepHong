@@ -9,7 +9,7 @@ target 'HHS' do
   use_react_native!(:path => config["reactNativePath"])
 
 
-
+  pod 'TrustKit', '1.6.5'
   pod 'react-native-webview', :path => '../node_modules/react-native-webview'
 
   # add the Firebase pod for Firebase Cloud Messaging
