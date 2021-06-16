@@ -13,14 +13,15 @@ import {
     Image,
     ScrollView,
 } from 'react-native';
-import Text from '../../baseComponents/text/Text';
-import FlatButton from '../../baseComponents/button/FlatButton';
-import { Screens } from '../../helpers/screenHelpers';
+import { resetScreen, Screens } from '../../helpers/screenHelpers';
 import I18n from '../../i18n/locales';
 import _ from 'lodash';
 import LoginAction from './LoginAction';
 import Alert from '../../baseComponents/alert/Alert';
 import CryptoJS from "react-native-crypto-js";
+import ValidateAction from '../../HhsApp/ValidateAction';
+import SpinnerActions from '../spinner/SpinnerActions';
+import constants from './LoginConstants';
 
 class LoginScreen extends Component {
 
@@ -31,6 +32,27 @@ class LoginScreen extends Component {
         passwordHasError: '',
         commonError: ''
     };
+
+    componentDidMount() {
+        if (this.props.userToken) {
+            const dispatch = this.props.dispatch;
+            const errorCall = (errorResponse) => {
+                dispatch(SpinnerActions.hideSpinner())
+                if (errorResponse?.status === 401) {
+                    dispatch({
+                        type: constants.ACTIONS.CLEAR_DATA
+                    });
+                }
+            };
+            const successCall = () => {
+                dispatch(SpinnerActions.hideSpinner());
+                resetScreen(this.props.navigation, Screens.TAB)
+            };
+
+            dispatch(SpinnerActions.showSpinner());
+            ValidateAction.validateToken(this.props.userToken, errorCall, successCall);
+        }
+    }
 
     showErrorFunction = (error) => {
         if (error.Title == 'Invalid Email') {
@@ -44,7 +66,7 @@ class LoginScreen extends Component {
                 passwordHasError: error.Message,
             });
         }
-        else{
+        else {
             this.setState({
                 commonError: error.Message,
             });
@@ -187,7 +209,9 @@ const mapStateToProps = (state, ownProps) => {
     return {
         errorMessage: state.login?.errorMessage,
         firebaseToken: state.login?.firebaseToken,
-        notificationId: state.activityDetail?.firebaseNotificationId
+        notificationId: state.activityDetail?.firebaseNotificationId,
+        userToken: state.login?.userData?.Token,
+        navigation: ownProps.navigation
     }
 }
 
@@ -196,6 +220,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         doLogin: (userName, password, firebaseToken, notificationId, showErrorFunction) => {
             dispatch(LoginAction.doLogin(userName, password, firebaseToken, notificationId, showErrorFunction, ownProps.navigation));
         },
+        dispatch
     }
 }
 
