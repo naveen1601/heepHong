@@ -38,6 +38,36 @@ static void InitializeFlipper(UIApplication *application) {
   InitializeFlipper(application);
 #endif
 
+  // Override TrustKit's logger method, useful for local debugging
+    void (^loggerBlock)(NSString *) = ^void(NSString *message)
+    {
+      NSLog(@"TrustKit log: %@", message);
+    };
+    [TrustKit setLoggerBlock:loggerBlock];
+
+    NSDictionary *trustKitConfig =
+    @{
+      // Swizzling because we can't access the NSURLSession instance used in React Native's fetch method
+      kTSKSwizzleNetworkDelegates: @YES,
+      kTSKPinnedDomains: @{
+          @"hhs-cam2.eastasia.cloudapp.azure.com" : @{
+              kTSKIncludeSubdomains: @YES, // Pin all subdomains
+              kTSKEnforcePinning: @YES, // Block connections if pinning validation failed
+              kTSKDisableDefaultReportUri: @YES,
+              kTSKPublicKeyHashes : @[
+                @"dz0GbS1i4LnBsJwhRw3iuZmVcgqpn+AlxSBRxUbOz0k=",
+                @"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=", // Fake backup key but we need to provide 2 pins
+              ],
+          },
+      }};
+    [TrustKit initSharedInstanceWithConfiguration:trustKitConfig];
+    [TrustKit sharedInstance].pinningValidatorCallback = ^(TSKPinningValidatorResult *result, NSString *notedHostname, TKSDomainPinningPolicy *policy) {
+      if (result.finalTrustDecision == TSKTrustEvaluationFailedNoMatchingPin) {
+        NSLog(@"TrustKit certificate matching failed");
+        // Add more logging here. i.e. Sentry, BugSnag etc
+      }
+    };
+  
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"HHS"
@@ -53,36 +83,6 @@ static void InitializeFlipper(UIApplication *application) {
   [FIRApp configure];
   return YES;
 }
-
-// Override TrustKit's logger method, useful for local debugging
-  void (^loggerBlock)(NSString *) = ^void(NSString *message)
-  {
-    NSLog(@"TrustKit log: %@", message);
-  };
-  [TrustKit setLoggerBlock:loggerBlock];
-
-  NSDictionary *trustKitConfig =
-  @{
-    // Swizzling because we can't access the NSURLSession instance used in React Native's fetch method
-    kTSKSwizzleNetworkDelegates: @YES,
-    kTSKPinnedDomains: @{
-        @"hhs-cam2.eastasia.cloudapp.azure.com" : @{
-            kTSKIncludeSubdomains: @YES, // Pin all subdomains
-            kTSKEnforcePinning: @YES, // Block connections if pinning validation failed
-            kTSKDisableDefaultReportUri: @YES,
-            kTSKPublicKeyHashes : @[
-              @"dz0GbS1i4LnBsJwhRw3iuZmVcgqpn+AlxSBRxUbOz0k=",
-              @"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=", // Fake backup key but we need to provide 2 pins
-            ],
-        },
-    }};
-  [TrustKit initSharedInstanceWithConfiguration:trustKitConfig];
-  [TrustKit sharedInstance].pinningValidatorCallback = ^(TSKPinningValidatorResult *result, NSString *notedHostname, TKSDomainPinningPolicy *policy) {
-    if (result.finalTrustDecision == TSKTrustEvaluationFailedNoMatchingPin) {
-      NSLog(@"TrustKit certificate matching failed");
-      // Add more logging here. i.e. Sentry, BugSnag etc
-    }
-  };
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
